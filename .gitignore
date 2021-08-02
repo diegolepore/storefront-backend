@@ -24,3 +24,5 @@ yarn-error.log*
 designs/
 
 .vercel
+
+/pgdata
