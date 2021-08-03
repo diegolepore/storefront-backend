@@ -6,8 +6,11 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 
+let count = 0
+
 app.get('/', (req, res) => {
-  res.send('Api root')
+  count++
+  res.send(`Api root ${count}`)
 })
 
 userRoutes(app)

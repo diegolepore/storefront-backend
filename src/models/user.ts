@@ -41,5 +41,18 @@ export const UserStore = {
     } catch (error) {
       throw new Error(`Could not add new user. Error: ${error}`)
     }
+  },
+
+  async index(): Promise<User[]> {
+    try {
+      const sql = 'SELECT * FROM users'
+      // @ts-ignore
+      const conn = await client.connect()
+      const result = await conn.query(sql)
+      conn.release()
+      return result.rows
+    } catch (error) {
+      throw new Error(`Cannot get users. Error: ${error}`)
+    }
   }
 }

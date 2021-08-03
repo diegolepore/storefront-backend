@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import { User, UserStore as store } from '../models/users'
+import { User, UserStore as store } from '../models/user'
 
 const create = async (req: Request, res: Response) => {
   const user: User = {
@@ -19,7 +19,19 @@ const create = async (req: Request, res: Response) => {
   }
 }
 
+const index = async (req: Request, res: Response) => {
+  try {
+    const user = await store.index()
+    res.json(user)
+  } catch (error) {
+    res.status(400)
+    res.json(error)
+    console.log(error)
+  }
+}
+
 const userRoutes = (app: express.Application) => {
+  app.get('/users', index)
   app.post('/users', create)
 }
 
