@@ -2,28 +2,24 @@
   "prod": {
     "driver": "pg",
     "host": "db",
-    "database": "storefront_db",
     "user": "full_stack_user",
     "password": "123456"
   },
   "test_prod": {
     "driver": "pg",
     "host": "db",
-    "database": "storefront_test_db",
     "user": "full_stack_user",
     "password": "123456"
   },
   "dev": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "storefront_db",
     "user": "full_stack_user",
     "password": "Pass1234"
   },
   "test_dev": {
     "driver": "pg",
     "host": "127.0.0.1",
-    "database": "storefront_test_db",
     "user": "full_stack_user",
     "password": "Pass1234"
   }

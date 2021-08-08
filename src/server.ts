@@ -2,7 +2,7 @@ import express from 'express'
 import userRoutes from './handlers/users'
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || process.env.APP_PORT
 
 app.use(express.json())
 

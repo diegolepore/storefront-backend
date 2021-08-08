@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build --onSuccess 'node ./build/server.js'",
-    "migrate": "db-migrate --env test up && db-migrate up",
+    "watch": "NODE_ENV=dev tsc-watch --esModuleInterop src/server.ts --outDir ./build --onSuccess 'node ./build/server.js'",
+    "migrate:prod": "db-migrate --env prod up && db-migrate --env test_prod up",
+    "migrate:dev": "db-migrate --env dev up && db-migrate --env test_dev up",
+    "createdb:prod": "db-migrate --config database_create.json db:create storefront_db --env prod && db-migrate --config database_create.json db:create storefront_test_db --env test_prod",
+    "createdb:dev": "db-migrate --config database_create.json db:create storefront_db --env dev && db-migrate --config database_create.json db:create storefront_test_db --env test_dev",
     "build": "rm -rf build && tsc",
     "start": "node build/src/server.js",
-    "test": "db-migrate --env test up && ENV=test jasmine-ts && db-migrate --env test down"
+    "test:prod": "db-migrate --env test_prod up && ENV=test jasmine-ts && db-migrate --env test_prod down",
+    "test:dev": "NODE_ENV=dev db-migrate --env test_dev up && NODE_ENV=dev ENV=test jasmine-ts && db-migrate --env test_dev down"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +28,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "custom-env": "^2.0.1",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^10.0.0",

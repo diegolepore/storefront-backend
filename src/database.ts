@@ -1,6 +1,9 @@
 import dotenv from 'dotenv'
 import { Pool } from 'pg'
 
+// require('custom-env').env('dev')
+require('custom-env').env(true)
+
 dotenv.config()
 
 const {
@@ -25,6 +28,15 @@ if(ENV === 'test') {
 }
 
 if(ENV === 'dev') {
+  client = new Pool({
+    host: POSTGRES_HOST,
+    database: POSTGRES_DB,
+    user: POSTGRES_USER,
+    password: POSTGRES_PASSWORD
+  })
+}
+
+if(ENV === 'prod') {
   client = new Pool({
     host: POSTGRES_HOST,
     database: POSTGRES_DB,
