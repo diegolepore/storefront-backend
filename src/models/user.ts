@@ -7,7 +7,7 @@ export type User = {
   first_name?: string; 
   last_name?: string; 
   email: string; 
-  password_digest: string;
+  pass: string;
 }
 
 const {
@@ -21,12 +21,12 @@ const saltRounds = (SALT_ROUNDS as unknown) as string
 export const UserStore = {
   async create(u: User): Promise<User | undefined> {
     try {
-      const sql = 'INSERT INTO users (first_name, last_name, email, password_digest) VALUES ($1, $2, $3, $4) RETURNING *'
+      const sql = 'INSERT INTO users (first_name, last_name, email, pass) VALUES ($1, $2, $3, $4) RETURNING *'
       // @ts-ignore
       const conn = await client.connect()
 
       const hash = bcrypt.hashSync(
-        u.password_digest + pepper,
+        u.pass + pepper,
         parseInt(saltRounds)
       )
 
@@ -53,6 +53,46 @@ export const UserStore = {
       return result.rows
     } catch (error) {
       throw new Error(`Cannot get users. Error: ${error}`)
+    }
+  },
+
+  async show(id: string): Promise<User> {
+    try {
+      // @ts-ignore
+      const conn = await client.connect()
+      const sql = 'SELECT * FROM users WHERE id=($1)'
+      const result = await conn.query(sql, [id])
+      conn.release()
+      return result.rows[0]
+    } catch (error) {
+      throw new Error(`Cannot get user. Error: ${error}`)
+    }
+  },
+
+  async authenticate(email: string, pass:string): Promise<User | null> {
+    try {
+      // @ts-ignore
+      const conn = await client.connect()
+      const sql = 'SELECT * FROM users WHERE email=($1)'
+      const result = await conn.query(sql, [email])
+
+      console.log('pass+pepper: ', pass+pepper)
+
+
+      if (result.rows.length) {
+        const user = result.rows[0]
+        console.log('user: ', user)
+
+        if (bcrypt.compareSync(pass+pepper, user.pass)) {
+          conn.release()
+          return user
+        }
+      } 
+      
+      conn.release()
+      return null
+    } catch (error) {
+      throw new Error(`Could not log the user in. Error: ${error}`)
     }
   }
 }
