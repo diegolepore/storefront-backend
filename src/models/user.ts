@@ -6,8 +6,8 @@ export type User = {
   id?: number,
   first_name?: string; 
   last_name?: string; 
-  email: string; 
-  pass: string;
+  email?: string; 
+  pass?: string;
 }
 
 const {
@@ -18,6 +18,20 @@ const {
 const pepper = BCRYPT_PASSWORD
 const saltRounds = (SALT_ROUNDS as unknown) as string
 
+
+const excludeObjectProps = (objToFilter: User, prop: string) => {
+  return Object.keys(objToFilter).filter((key) => {
+    console.log(key)
+    return key !== prop
+  }).reduce((obj, current) => {
+    return {
+      ...obj,
+      // @ts-ignore
+      [current]: objToFilter[current]
+    }
+  }, {})
+}
+
 export const UserStore = {
   async create(u: User): Promise<User | undefined> {
     try {
@@ -26,6 +40,7 @@ export const UserStore = {
       const conn = await client.connect()
 
       const hash = bcrypt.hashSync(
+        // @ts-ignore
         u.pass + pepper,
         parseInt(saltRounds)
       )
@@ -75,17 +90,17 @@ export const UserStore = {
       const conn = await client.connect()
       const sql = 'SELECT * FROM users WHERE email=($1)'
       const result = await conn.query(sql, [email])
-
-      console.log('pass+pepper: ', pass+pepper)
-
-
+      // @ts-ignore
+      let user = null
+      
       if (result.rows.length) {
-        const user = result.rows[0]
+        user = result.rows[0]
         console.log('user: ', user)
-
+        console.log('pass+pepper: ', pass+pepper)
+        console.log('bcrypt.compareSync(pass+pepper, user.pass)', bcrypt.compareSync(pass+pepper, user.pass))
         if (bcrypt.compareSync(pass+pepper, user.pass)) {
           conn.release()
-          return user
+          return excludeObjectProps(user, 'pass')
         }
       } 
       

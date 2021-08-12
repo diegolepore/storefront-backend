@@ -45,12 +45,8 @@ const show = async (req: Request, res: Response) => {
 }
 
 const authenticate = async (req: Request, res: Response) => {
-  const authUser: User = {
-    email: req.body.email,
-    pass: req.body.pass
-  }
   try {
-    const user = await store.authenticate(req.body.email,req.body.pass)
+    const user = await store.authenticate(req.body.email, req.body.pass)
     // @ts-ignore
     const access_token = jwt.sign({user}, process.env.TOKEN_SECRET)
     res.json({access_token: access_token})
