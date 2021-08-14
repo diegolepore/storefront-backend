@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "NODE_ENV=dev tsc-watch --esModuleInterop src/server.ts --outDir ./build/src --onSuccess 'node ./build/src/server.js'",
     "build": "rm -rf build && tsc",
+    "watch": "NODE_ENV=dev tsc-watch --esModuleInterop src/server.ts --outDir ./build/src --onSuccess 'node ./build/src/server.js'",
     "start": "NODE_ENV=prod node build/src/server.js",
+    "test:prod": "NODE_ENV=prod db-migrate --env test_prod up && NODE_ENV=prod ENV=test jasmine-ts && db-migrate --env test_prod down",
+    "test:dev": "NODE_ENV=dev db-migrate --env test_dev up && NODE_ENV=dev ENV=test jasmine-ts && db-migrate --env test_dev down",
     "createdb:prod": "db-migrate --config database_create.json db:create storefront_db --env prod && db-migrate --config database_create.json db:create storefront_test_db --env test_prod",
     "createdb:dev": "db-migrate --config database_create.json db:create storefront_db --env dev && db-migrate --config database_create.json db:create storefront_test_db --env test_dev",
-    "migrate:prod": "db-migrate --env prod up && db-migrate --env test_prod up",
-    "migrate:dev": "db-migrate --env dev up && db-migrate --env test_dev up",
-    "test:prod": "NODE_ENV=prod db-migrate --env test_prod up && NODE_ENV=prod ENV=test jasmine-ts && db-migrate --env test_prod down",
-    "test:dev": "NODE_ENV=dev db-migrate --env test_dev up && NODE_ENV=dev ENV=test jasmine-ts && db-migrate --env test_dev down"
+    "migrate:prod": "db-migrate --env prod up",
+    "migrate:dev": "db-migrate --env dev up"
   },
   "keywords": [],
   "author": "",
