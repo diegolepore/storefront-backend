@@ -23,12 +23,12 @@ export const OrderStore = {
     }
   },
 
-  async index(): Promise<Order[]> {
+  async index(userId: string): Promise<Order[]> {
     try {
       // @ts-ignore
       const conn = await client.connect()
-      const sql = 'SELECT * FROM orders'
-      const result = await conn.query(sql)
+      const sql = 'SELECT * FROM orders WHERE user_id=($1)'
+      const result = await conn.query(sql, [userId])
       conn.release()
 
       return result.rows
@@ -37,12 +37,12 @@ export const OrderStore = {
     }
   },
 
-  async show(id: string): Promise<Order[]> {
+  async show(id: string, userId: string): Promise<Order[]> {
     try {
       // @ts-ignore
       const conn = await client.connect()
-      const sql = 'SELECT * FROM orders WHERE id=($1)'
-      const result = await conn.query(sql, [id])
+      const sql = 'SELECT * FROM orders WHERE id=($1) AND user_id=($2)'
+      const result = await conn.query(sql, [id, userId])
       conn.release()
 
       return result.rows[0]
@@ -51,12 +51,12 @@ export const OrderStore = {
     }
   },
 
-  async delete(id: string): Promise<Order | undefined> {
+  async delete(id: string, userId: string): Promise<Order | undefined> {
     try {
       // @ts-ignore
       const conn = await client.connect()
-      const sql = 'DELETE FROM orders WHERE id=($1) RETURNING *'
-      const result = await conn.query(sql, [id])
+      const sql = 'DELETE FROM orders WHERE id=($1) AND user_id=($2) RETURNING *'
+      const result = await conn.query(sql, [id, userId])
       conn.release()
 
       return result.rows[0]

@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import { Order, OrderStore as store } from '../models/order'
 import { verifyJWT } from '../middleware/auth.middleware'
+import jwt from 'jsonwebtoken'
 
 const create = async (req: express.Request, res: express.Response) => {
   try {
@@ -21,7 +22,10 @@ const create = async (req: express.Request, res: express.Response) => {
 
 const index = async (req: express.Request, res: express.Response) => {
   try {
-    const result = await store.index()
+    const decodedAccessToken = jwt.decode((req.headers.authorization?.split(" ")[1] as unknown) as string)
+    // @ts-ignore
+    const userId = decodedAccessToken.user.id
+    const result = await store.index(userId)
     res.json(result)
   } catch (error) {
     res.status(400)
@@ -32,7 +36,10 @@ const index = async (req: express.Request, res: express.Response) => {
 
 const show = async (req: express.Request, res: express.Response) => {
   try {
-    const result = await store.show(req.params.id)
+    const decodedAccessToken = jwt.decode((req.headers.authorization?.split(" ")[1] as unknown) as string)
+    // @ts-ignore
+    const userId = decodedAccessToken.user.id
+    const result = await store.show(req.params.id, userId)
     res.json(result)
   } catch (error) {
     res.status(400)
@@ -43,7 +50,10 @@ const show = async (req: express.Request, res: express.Response) => {
 
 const remove = async (req: express.Request, res: express.Response) => {
   try {
-    const result = await store.delete(req.params.id)
+    const decodedAccessToken = jwt.decode((req.headers.authorization?.split(" ")[1] as unknown) as string)
+    // @ts-ignore
+    const userId = decodedAccessToken.user.id
+    const result = await store.delete(req.params.id, userId)
     res.json(result)
   } catch (error) {
     res.status(400)
