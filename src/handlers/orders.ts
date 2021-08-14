@@ -19,11 +19,44 @@ const create = async (req: express.Request, res: express.Response) => {
   }
 }
 
+const index = async (req: express.Request, res: express.Response) => {
+  try {
+    const result = await store.index()
+    res.json(result)
+  } catch (error) {
+    res.status(400)
+    res.json(error)
+    console.log(error)
+  }
+}
+
+const show = async (req: express.Request, res: express.Response) => {
+  try {
+    const result = await store.show(req.params.id)
+    res.json(result)
+  } catch (error) {
+    res.status(400)
+    res.json(error)
+    console.log(error)
+  }
+}
+
+const remove = async (req: express.Request, res: express.Response) => {
+  try {
+    const result = await store.delete(req.params.id)
+    res.json(result)
+  } catch (error) {
+    res.status(400)
+    res.json(error)
+    console.log(error)
+  }
+}
+
 const orderRoutes = (app: express.Application) => {
-  app.post('/orders', verifyJWT, create)
-  // app.get('/orders/:id', verifyJWT, index),
-  // app.get('/orders/:id', verifyJWT, show),
-  // app.get('/orders/:id', verifyJWT, delete)
+  app.post('/orders', verifyJWT, create),
+  app.get('/orders', verifyJWT, index)
+  app.get('/orders/:id', verifyJWT, show),
+  app.delete('/orders/:id', verifyJWT, remove)
 }
 
 export default orderRoutes
