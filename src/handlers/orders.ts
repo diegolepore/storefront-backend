@@ -11,7 +11,10 @@ const create = async (req: express.Request, res: express.Response) => {
       user_id: req.body.user_id
     }
 
-    const result = await store.create(order)
+    // @ts-ignore
+    console.log('req.userId ⭐️ :', req.userId)
+    // @ts-ignore
+    const result = await store.create(order, req.userId)
     res.json(result)
   } catch (error) {
     res.status(400)
@@ -22,10 +25,8 @@ const create = async (req: express.Request, res: express.Response) => {
 
 const index = async (req: express.Request, res: express.Response) => {
   try {
-    const decodedAccessToken = jwt.decode((req.headers.authorization?.split(" ")[1] as unknown) as string)
     // @ts-ignore
-    const userId = decodedAccessToken.user.id
-    const result = await store.index(userId)
+    const result = await store.index(req.userId)
     res.json(result)
   } catch (error) {
     res.status(400)
@@ -36,10 +37,8 @@ const index = async (req: express.Request, res: express.Response) => {
 
 const show = async (req: express.Request, res: express.Response) => {
   try {
-    const decodedAccessToken = jwt.decode((req.headers.authorization?.split(" ")[1] as unknown) as string)
     // @ts-ignore
-    const userId = decodedAccessToken.user.id
-    const result = await store.show(req.params.id, userId)
+    const result = await store.show(req.params.id, req.userId)
     res.json(result)
   } catch (error) {
     res.status(400)
@@ -50,10 +49,22 @@ const show = async (req: express.Request, res: express.Response) => {
 
 const remove = async (req: express.Request, res: express.Response) => {
   try {
-    const decodedAccessToken = jwt.decode((req.headers.authorization?.split(" ")[1] as unknown) as string)
     // @ts-ignore
-    const userId = decodedAccessToken.user.id
-    const result = await store.delete(req.params.id, userId)
+    const result = await store.delete(req.params.id, req.userId)
+    res.json(result)
+  } catch (error) {
+    res.status(400)
+    res.json(error)
+    console.log(error)
+  }
+}
+
+const editStatus = async (req: express.Request, res: express.Response) => {
+  try {
+    // @ts-ignore
+    console.log('req ⭐️ :', req.body)
+    // @ts-ignore
+    const result = await store.editStatus(req.params.id, req.userId, req.body.status)
     res.json(result)
   } catch (error) {
     res.status(400)
@@ -67,6 +78,7 @@ const orderRoutes = (app: express.Application) => {
   app.get('/orders', verifyJWT, index)
   app.get('/orders/:id', verifyJWT, show),
   app.delete('/orders/:id', verifyJWT, remove)
+  app.put('/orders/:id', verifyJWT, editStatus)
 }
 
 export default orderRoutes
