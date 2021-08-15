@@ -53,10 +53,10 @@ const authenticate = async (req: Request, res: Response) => {
 }
 
 const userRoutes = (app: express.Application): void => {
-  app.post('/users', create)
-  app.post('/users/auth', authenticate)
   app.get('/users', verifyJWT, index)
   app.get('/user/:id', verifyJWT, show)
+  app.post('/users', create)
+  app.post('/users/auth', authenticate)
 }
 
 export default userRoutes

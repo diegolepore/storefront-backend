@@ -38,8 +38,6 @@ const show = async (req: Request, res: Response) => {
     res.json(error)
   }
 }
-// const edit
-// const delete
 
 const productRoutes = (app: express.Application): void => {
   app.get('/products', index)
