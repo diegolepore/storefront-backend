@@ -5,15 +5,13 @@ import orderRoutes from './handlers/orders'
 import dashboardRoutes from './handlers/dashboard'
 
 const app = express()
-const port = process.env.PORT || process.env.APP_PORT
+const { ENV } = process.env
+const port = process.env.PORT || (ENV?.includes('dev') ? process.env.APP_PORT : process.env.APP_PROD_PORT)
 
 app.use(express.json())
 
-let count = 0
-
 app.get('/', (req, res) => {
-  count++
-  res.send(`Api root ${count}`)
+  res.send('Api root')
 })
 
 userRoutes(app)
@@ -21,7 +19,8 @@ productRoutes(app)
 orderRoutes(app)
 dashboardRoutes(app)
 
-app.listen(port, (): void => { 
+app.listen(port, (): void => {
+  // eslint-disable-next-line no-console
   console.log(`Server started at http://localhost:${port}`)
 })
 

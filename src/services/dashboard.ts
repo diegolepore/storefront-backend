@@ -1,13 +1,11 @@
-// @ts-ignore
 import client from '../database'
 import { Order } from '../models/order'
 
 export const DashboardQueries = {
   async currentOrderByUser(userId: string): Promise<Order | undefined> {
     try {
-      // @ts-ignore
       const conn = await client.connect()
-      const sql = "SELECT * FROM orders WHERE user_id=($1) AND order_status='active'"
+      const sql = 'SELECT * FROM orders WHERE user_id=($1) AND order_status=\'active\''
       const result = await conn.query(sql, [userId])
       conn.release()
 

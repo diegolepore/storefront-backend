@@ -1,4 +1,3 @@
-// @ts-ignore
 import client from '../database'
 
 export type Order = {
@@ -11,7 +10,6 @@ export type Order = {
 export const OrderStore = {
   async create(o: Order, userId: string): Promise<Order | undefined> {
     try {
-      // @ts-ignore
       const conn = await client.connect()
       const sql = 'INSERT INTO orders (products, order_status, user_id) VALUES ($1, $2, $3) RETURNING *'
       const result = await conn.query(sql, [JSON.stringify(o.products), o.order_status, userId])
@@ -25,7 +23,6 @@ export const OrderStore = {
 
   async index(userId: string): Promise<Order[]> {
     try {
-      // @ts-ignore
       const conn = await client.connect()
       const sql = 'SELECT * FROM orders WHERE user_id=($1)'
       const result = await conn.query(sql, [userId])
@@ -39,7 +36,6 @@ export const OrderStore = {
 
   async show(id: string, userId: string): Promise<Order[]> {
     try {
-      // @ts-ignore
       const conn = await client.connect()
       const sql = 'SELECT * FROM orders WHERE id=($1) AND user_id=($2)'
       const result = await conn.query(sql, [id, userId])
@@ -51,9 +47,8 @@ export const OrderStore = {
     }
   },
 
-  async editStatus(id: string, userId: string, status: string, ): Promise<Order | undefined> {
+  async editStatus(id: string, userId: string, status: string ): Promise<Order | undefined> {
     try {
-      // @ts-ignore
       const conn = await client.connect()
       const sql = 'UPDATE orders SET order_status=($1) WHERE id=($2) AND user_id=($3) RETURNING *'
       const result = await conn.query(sql, [status, id, userId])
@@ -67,7 +62,6 @@ export const OrderStore = {
 
   async delete(id: string, userId: string): Promise<Order | undefined> {
     try {
-      // @ts-ignore
       const conn = await client.connect()
       const sql = 'DELETE FROM orders WHERE id=($1) AND user_id=($2) RETURNING *'
       const result = await conn.query(sql, [id, userId])

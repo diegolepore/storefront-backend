@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf build && tsc",
-    "watch": "NODE_ENV=dev tsc-watch --esModuleInterop src/server.ts --outDir ./build/src --onSuccess 'node ./build/src/server.js'",
-    "start": "NODE_ENV=prod node build/src/server.js",
-    "test:prod": "NODE_ENV=prod db-migrate --env test_prod up && NODE_ENV=prod ENV=test jasmine-ts && db-migrate --env test_prod down",
-    "test:dev": "NODE_ENV=dev db-migrate --env test_dev up && NODE_ENV=dev ENV=test jasmine-ts && db-migrate --env test_dev down",
+    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build/src --onSuccess 'node ./build/src/server.js'",
+    "start": "ENV=prod  node build/src/server.js",
+    "test:prod": "db-migrate --env test_prod up && ENV=test_prod jasmine-ts && db-migrate --env test_prod down",
+    "test:dev": "db-migrate --env test_dev up && ENV=test_dev jasmine-ts && db-migrate --env test_dev down",
     "createdb:prod": "db-migrate --config database_create.json db:create storefront_db --env prod && db-migrate --config database_create.json db:create storefront_test_db --env test_prod",
     "createdb:dev": "db-migrate --config database_create.json db:create storefront_db --env dev && db-migrate --config database_create.json db:create storefront_test_db --env test_dev",
     "migrate:prod": "db-migrate --env prod up",
-    "migrate:dev": "db-migrate --env dev up"
+    "migrate:dev": "db-migrate --env dev up",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix"
   },
   "keywords": [],
   "author": "",
@@ -23,12 +25,14 @@
     "@types/jasmine": "^3.8.1",
     "@types/jsonwebtoken": "^8.5.4",
     "@types/pg": "^8.6.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "eslint": "^7.30.0",
     "nodemon": "^2.0.12",
     "typescript": "^4.3.5"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "custom-env": "^2.0.1",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^10.0.0",

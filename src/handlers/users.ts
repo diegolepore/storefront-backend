@@ -17,7 +17,6 @@ const create = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400)
     res.json(error)
-    console.log(error)
   }
 }
 
@@ -28,7 +27,6 @@ const index = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400)
     res.json(error)
-    console.log(error)
   }
 }
 
@@ -40,24 +38,21 @@ const show = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400)
     res.json(error)
-    console.log(error)
   }
 }
 
 const authenticate = async (req: Request, res: Response) => {
   try {
     const user = await store.authenticate(req.body.email, req.body.pass)
-    // @ts-ignore
-    const access_token = jwt.sign({user}, process.env.TOKEN_SECRET)
+    const access_token = jwt.sign({user}, process.env.TOKEN_SECRET as jwt.Secret)
     res.json({access_token: access_token})
   } catch (error) {
     res.status(400)
     res.json(error)
-    console.log(error)
   }
 }
 
-const userRoutes = (app: express.Application) => {
+const userRoutes = (app: express.Application): void => {
   app.post('/users', create)
   app.post('/users/auth', authenticate)
   app.get('/users', verifyJWT, index)

@@ -16,7 +16,6 @@ const create = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400)
     res.json(error)
-    console.log(error)
   }
 }
 const index = async (req: Request, res: Response) => {
@@ -26,7 +25,6 @@ const index = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400)
     res.json(error)
-    console.log(error)
   }
 }
 
@@ -38,13 +36,12 @@ const show = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400)
     res.json(error)
-    console.log(error)
   }
 }
 // const edit
 // const delete
 
-const productRoutes = (app: express.Application) => {
+const productRoutes = (app: express.Application): void => {
   app.get('/products', index)
   app.get('/products/:id', show)
   app.post('/products', verifyJWT, create)

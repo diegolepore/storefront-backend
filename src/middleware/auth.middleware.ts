@@ -5,12 +5,10 @@ export const verifyJWT = (req: express.Request, res: express.Response, next: exp
   try {
     const authorizationHeader = (req.headers.authorization as unknown) as string
     const token = authorizationHeader.split(' ')[1]
-    // @ts-ignore
-    const decodedAccessToken = jwt.decode(token)
-    // @ts-ignore
-    req.userId = decodedAccessToken.user.id
-    // @ts-ignore
-    jwt.verify(token, process.env.TOKEN_SECRET)
+    const decodedAccessToken = jwt.decode(token) as jwt.JwtPayload
+    const tokenSecret = process.env.TOKEN_SECRET as string
+    req.body.userId = decodedAccessToken.user.id
+    jwt.verify(token, tokenSecret)
 
     next()
   } catch (error) {
