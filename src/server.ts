@@ -4,9 +4,19 @@ import productRoutes from './handlers/products'
 import orderRoutes from './handlers/orders'
 import dashboardRoutes from './handlers/dashboard'
 
-const app = express()
+let env
 const { ENV } = process.env
-const port = process.env.PORT || (ENV?.includes('dev') ? process.env.APP_PORT : process.env.APP_PROD_PORT)
+
+if (ENV === 'test_dev' || ENV === 'test_prod') {
+  env = 3333
+} else if (ENV === 'dev') {
+  env = process.env.APP_PORT
+} else if (ENV === 'prod') {
+  env = process.env.APP_PROD_PORT
+}
+
+const app = express()
+const port = process.env.PORT || env
 
 app.use(express.json())
 
