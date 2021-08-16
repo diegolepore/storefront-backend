@@ -1,25 +1,22 @@
 import supertest from 'supertest'
 import app from '../../server'
 
+let access_token = ''
+let userId = 0
+let productId = 0
 const request = supertest(app)
-
 const user = {
-  first_name: 'Bob',
-  last_name: 'Dylan',
-  email: 'bobdylan@test.com',
+  first_name: 'Michael',
+  last_name: 'Jordan',
+  email: 'mj@test.com',
   pass: 'Pass1234'
 }
-
 const product = {
 	name: 'iPhone X-pensive',
 	description: 'This smarthphone is really cool and expensive',
 	price: 800,
 	category: 'smartphones'
 }
-
-let access_token = ''
-let userId = 0
-let productId = 0
 
 describe('📦 /products route suite', () => {
 

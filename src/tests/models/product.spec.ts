@@ -6,7 +6,6 @@ const product = {
 	price: 80,
 	category: 'sports'
 }
-
 let productId: number | undefined = 0
 
 describe('📦 Product Model suite', () => {
@@ -31,34 +30,41 @@ describe('📦 Product Model suite', () => {
       category: product.category
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    productId = result?.id
-
-    expect(result?.name).toBe(product.name)
-    expect(result?.description).toBe(product.description)
-    expect(result?.price).toBe(product.price)
-    expect(result?.category).toBe(product.category)
+    if(result) {      
+      productId = result.id
+      expect(result.name).toBe(product.name)
+      expect(result.description).toBe(product.description)
+      expect(result.price).toBe(product.price)
+      expect(result.category).toBe(product.category)
+    }
   })
 
   it('index method should return a list of products', async () => {
-    const result = await store.index()
-    expect(result.length).toBeGreaterThan(0)
+    const result: Product[] | undefined = await store.index()
+    
+    if(result) {
+      expect(result.length).toBeGreaterThan(0)
+    }
   })
 
   it('show method should return the correct product', async () => {
-    const result = await store.show(String(productId))
+    const result: Product | undefined= await store.show(String(productId))
 
-    expect(result?.id).toBe(productId)
-    expect(result?.name).toBe(product.name)
-    expect(result?.description).toBe(product.description)
-    expect(result?.price).toBe(product.price)
-    expect(result?.category).toBe(product.category)
+    if(result) {      
+      expect(result?.id).toBe(productId)
+      expect(result?.name).toBe(product.name)
+      expect(result?.description).toBe(product.description)
+      expect(result?.price).toBe(product.price)
+      expect(result?.category).toBe(product.category)
+    }
   })
 
   it('delete method should remove the product', async () => {
     await store.delete(String(productId))
-    const result = await store.index()
-    
-    expect(result).toEqual([])
+    const result: Product[] | undefined = await store.index()
+
+    if(result) {
+      expect(result).toEqual([])
+    }
   })
 })

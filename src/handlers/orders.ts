@@ -15,6 +15,7 @@ const create = async (req: Request, res: Response) => {
       order, 
       userIdFromDecodedJWTMiddleware
     )
+    res.status(201)
     res.json(result)
   } catch (error) {
     res.status(400)

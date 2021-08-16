@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { User, UserStore as store } from '../../models/user'
 
+let userId: number | undefined = 0
 const user = {
   first_name: 'Fat',
   last_name: 'Mike',
   email: 'fatmike@test.com',
   pass: 'Pass1234'
 }
-
-let userID: number | undefined = 0
 
 describe('👤 User Model suite', () => {
 
@@ -40,38 +38,38 @@ describe('👤 User Model suite', () => {
       pass: user.pass
     })
 
-    userID = result?.id
-
-    expect(result?.first_name).toBe(user.first_name)
-    expect(result?.last_name).toBe(user.last_name)
-    expect(result?.email).toBe(user.email)
+    if(result) {
+      userId = result.id
+  
+      expect(result.first_name).toBe(user.first_name)
+      expect(result.last_name).toBe(user.last_name)
+      expect(result.email).toBe(user.email)
+    }
   })
 
   it('index method should return a list of users', async () => {
-    const result = await store.index()
-    expect(result.length).toBeGreaterThan(0)
-
-    expect(result[0].first_name).toBe(user.first_name)
-    expect(result[0].last_name).toBe(user.last_name)
-    expect(result[0].email).toBe(user.email)
+    const result: User[] | undefined = await store.index()
+    
+    if(result) {
+      expect(result.length).toBeGreaterThan(0)
+    }
   })
 
   it('show method should return the correct user', async () => {
-    const result = await store.show(String(userID))
+    const result: User | undefined = await store.show(String(userId))
 
-    expect(result?.first_name).toBe(user.first_name)
-    expect(result?.last_name).toBe(user.last_name)
-    expect(result?.email).toBe(user.email)
+    if(result) {
+      expect(result.first_name).toBe(user.first_name)
+      expect(result.last_name).toBe(user.last_name)
+      expect(result.email).toBe(user.email)
+    }
   })
 
   it('delete method should remove the user', async () => {
-    await store.delete(String(userID))
-    const result = await store.index()
-
-    // console.log('deletedUser: ', deletedUser)
-    // console.log('result: ', result)
-
+    const deletedUser: User | undefined = await store.delete(String(userId))
     
-    expect(result).toEqual([])
+    if(deletedUser) {
+      expect(deletedUser.email).toBe(user.email)
+    }
   })
 })

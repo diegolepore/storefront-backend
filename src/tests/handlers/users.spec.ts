@@ -3,14 +3,12 @@ import app from '../../server'
 import jwt from 'jsonwebtoken'
 
 const request = supertest(app)
-
 const user = {
   first_name: 'John',
   last_name: 'Doe',
   email: 'john_doe@test.com',
   pass: 'Pass1234'
 }
-
 let access_token = ''
 let usersLength = 0
 let userId = 0

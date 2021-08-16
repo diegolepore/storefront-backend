@@ -23,7 +23,7 @@ export const ProductStore = {
     }
   },
 
-  async index(): Promise<Product[]> {
+  async index(): Promise<Product[] | undefined> {
     try {
       const conn = await client.connect()
       const sql = 'SELECT * FROM products'
@@ -36,7 +36,7 @@ export const ProductStore = {
     }
   },
 
-  async show(id: string): Promise<Product> {
+  async show(id: string): Promise<Product | undefined> {
     try {
       const conn = await client.connect()
       const sql = 'SELECT * FROM products WHERE id=($1)'
@@ -50,7 +50,7 @@ export const ProductStore = {
     }
   },
 
-  async delete(id: string): Promise<Product> {
+  async delete(id: string): Promise<Product | undefined> {
     try {
       const conn = await client.connect()
       const sql = 'DELETE FROM products WHERE id=($1) RETURNING *'

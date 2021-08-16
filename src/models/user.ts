@@ -48,7 +48,7 @@ export const UserStore = {
     }
   },
 
-  async index(): Promise<User[]> {
+  async index(): Promise<User[] | undefined> {
     try {
       const sql = 'SELECT * FROM users'
       const conn = await client.connect()
@@ -62,7 +62,7 @@ export const UserStore = {
     }
   },
 
-  async show(id: string): Promise<User> {
+  async show(id: string): Promise<User | undefined> {
     try {
       const conn = await client.connect()
       const sql = 'SELECT * FROM users WHERE id=($1)'
@@ -76,7 +76,7 @@ export const UserStore = {
     }
   },
 
-  async delete(id: string): Promise<User> {
+  async delete(id: string): Promise<User | undefined> {
     try {
       const conn = await client.connect()
       const sql = 'DELETE FROM users WHERE id=($1) RETURNING *'
@@ -90,14 +90,14 @@ export const UserStore = {
     }
   },
 
-  async authenticate(email: string, pass:string): Promise<User | null> {
+  async authenticate(email: string, pass:string): Promise<User | undefined> {
     try {
       
       const conn = await client.connect()
       const sql = 'SELECT * FROM users WHERE email=($1)'
       const result = await conn.query(sql, [email])
       
-      let user = null
+      let user
       
       if (result.rows.length) {
         user = result.rows[0]
@@ -108,7 +108,6 @@ export const UserStore = {
       } 
       
       conn.release()
-      return null
     } catch (error) {
       throw new Error(`Could not log the user in. Error: ${error}`)
     }

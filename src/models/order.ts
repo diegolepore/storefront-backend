@@ -3,8 +3,8 @@ import client from '../database'
 export type Order = {
   id?: number,
   products?: string,
-  order_status: string,
-  user_id: number
+  order_status?: string,
+  user_id?: number
 }
 
 export const OrderStore = {
@@ -21,7 +21,7 @@ export const OrderStore = {
     }
   },
 
-  async index(userId: string): Promise<Order[]> {
+  async index(userId: string): Promise<Order[] | undefined> {
     try {
       const conn = await client.connect()
       const sql = 'SELECT * FROM orders WHERE user_id=($1)'
@@ -34,7 +34,7 @@ export const OrderStore = {
     }
   },
 
-  async show(id: string, userId: string): Promise<Order[]> {
+  async show(id: string, userId: string): Promise<Order | undefined> {
     try {
       const conn = await client.connect()
       const sql = 'SELECT * FROM orders WHERE id=($1) AND user_id=($2)'
