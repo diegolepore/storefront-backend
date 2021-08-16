@@ -48,10 +48,10 @@ if(ENV === 'test_dev') {
 
 if(ENV === 'test_prod') {
   client = new Pool({
-    host: POSTGRES_HOST,
+    host: POSTGRES_PROD_HOST,
     database: POSTGRES_PROD_TEST_DB,
-    user: POSTGRES_USER,
-    password: POSTGRES_PASSWORD
+    user: POSTGRES_PROD_USER,
+    password: POSTGRES_PROD_PASSWORD
   })
 }
 

@@ -6,9 +6,9 @@
   "scripts": {
     "build": "rm -rf build && tsc",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build/src --onSuccess 'node ./build/src/server.js'",
-    "start": "ENV=prod  node build/src/server.js",
-    "test:prod": "db-migrate --env test_prod up && ENV=test_prod jasmine-ts && db-migrate --env test_prod down",
-    "test:dev": "db-migrate --env test_dev up && ENV=test_dev jasmine-ts && db-migrate --env test_dev down",
+    "start": "ENV=prod node build/src/server.js",
+    "test:prod": "db-migrate --env test_prod up && ENV=test_prod jasmine-ts && db-migrate --env test_prod down -c 3",
+    "test:dev": "db-migrate --env test_dev up && ENV=test_dev jasmine-ts && db-migrate --env test_dev down -c 3",
     "createdb:prod": "db-migrate --config database_create.json db:create storefront_db --env prod && db-migrate --config database_create.json db:create storefront_test_db --env test_prod",
     "createdb:dev": "db-migrate --config database_create.json db:create storefront_db --env dev && db-migrate --config database_create.json db:create storefront_test_db --env test_dev",
     "migrate:prod": "db-migrate --env prod up",
@@ -27,6 +27,7 @@
     "@types/pg": "^8.6.1",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
+    "@types/supertest": "^2.0.11",
     "eslint": "^7.30.0",
     "nodemon": "^2.0.12",
     "typescript": "^4.3.5"
@@ -42,6 +43,7 @@
     "jasmine-ts": "^0.4.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",
+    "supertest": "^6.1.3",
     "ts-node": "^10.1.0",
     "tsc-watch": "^4.4.0"
   }

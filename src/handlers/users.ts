@@ -13,6 +13,7 @@ const create = async (req: Request, res: Response) => {
 
   try {
     const newUser = await store.create(user)
+    res.status(201)
     res.json(newUser)
   } catch (error) {
     res.status(400)
@@ -47,16 +48,16 @@ const authenticate = async (req: Request, res: Response) => {
     const access_token = jwt.sign({user}, process.env.TOKEN_SECRET as jwt.Secret)
     res.json({access_token: access_token})
   } catch (error) {
-    res.status(400)
+    res.status(401)
     res.json(error)
   }
 }
 
 const userRoutes = (app: express.Application): void => {
-  app.get('/users', verifyJWT, index)
-  app.get('/user/:id', verifyJWT, show)
   app.post('/users', create)
   app.post('/users/auth', authenticate)
+  app.get('/users', verifyJWT, index)
+  app.get('/users/:id', verifyJWT, show)
 }
 
 export default userRoutes
