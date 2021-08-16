@@ -12,6 +12,7 @@ const create = async (req: Request, res: Response) => {
 
   try {
     const product = await store.create(products)
+    res.status(201)
     res.json(product)
   } catch (error) {
     res.status(400)
@@ -39,10 +40,22 @@ const show = async (req: Request, res: Response) => {
   }
 }
 
+const remove = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id
+    const product = await store.delete(id)
+    res.json(product)
+  } catch (error) {
+    res.status(400)
+    res.json(error)
+  }
+}
+
 const productRoutes = (app: express.Application): void => {
   app.get('/products', index)
   app.get('/products/:id', show)
   app.post('/products', verifyJWT, create)
+  app.delete('/products/:id', verifyJWT, remove)
 }
 
 export default productRoutes

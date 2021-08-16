@@ -7,7 +7,9 @@ class CustomProcessor extends DisplayProcessor {
   }
 }
 
-const reporter = new SpecReporter({
+jasmine.getEnv().clearReporters()
+jasmine.getEnv().addReporter(
+  new SpecReporter({
     suite: {
       displayNumber: true
     },
@@ -23,6 +25,4 @@ const reporter = new SpecReporter({
     },
     customProcessors: [CustomProcessor]
   })
-
-jasmine.getEnv().clearReporters()
-jasmine.getEnv().addReporter(reporter)
+)

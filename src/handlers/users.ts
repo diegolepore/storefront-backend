@@ -42,6 +42,17 @@ const show = async (req: Request, res: Response) => {
   }
 }
 
+const remove = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id
+    const user = await store.delete(id)
+    res.json(user)
+  } catch (error) {
+    res.status(400)
+    res.json(error)
+  }
+}
+
 const authenticate = async (req: Request, res: Response) => {
   try {
     const user = await store.authenticate(req.body.email, req.body.pass)
@@ -58,6 +69,7 @@ const userRoutes = (app: express.Application): void => {
   app.post('/users/auth', authenticate)
   app.get('/users', verifyJWT, index)
   app.get('/users/:id', verifyJWT, show)
+  app.delete('/users/:id', verifyJWT, remove)
 }
 
 export default userRoutes

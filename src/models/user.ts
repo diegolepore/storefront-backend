@@ -76,6 +76,20 @@ export const UserStore = {
     }
   },
 
+  async delete(id: string): Promise<User> {
+    try {
+      const conn = await client.connect()
+      const sql = 'DELETE FROM users WHERE id=($1) RETURNING *'
+      const result = await conn.query(sql, [id])
+      
+      conn.release()
+
+      return result.rows[0]
+    } catch (error) {
+      throw new Error(`Cannot delete user. Error: ${error}`)
+    }
+  },
+
   async authenticate(email: string, pass:string): Promise<User | null> {
     try {
       

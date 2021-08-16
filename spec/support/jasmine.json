@@ -4,7 +4,15 @@
     "**/*.spec.ts"
   ],
   "helpers": [
-    "./src/helpers/**/*.ts"
+    "helpers/**/*.ts"
+  ],
+  "reporters": [
+    {
+      "name": "jasmine-spec-reporter",
+      "options": {
+        "displayStacktrace": "all"
+      }
+    }
   ],
   "stopSpecOnExpectationFailure": false,
   "random": false

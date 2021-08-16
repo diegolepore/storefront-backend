@@ -12,8 +12,10 @@ const user = {
 }
 
 let access_token = ''
+let usersLength = 0
+let userId = 0
 
-describe('🧪 /users route', () => {
+describe('👤 /users route suite', () => {
 
   it('Should create a user', async () => {
     const response = await request
@@ -21,9 +23,13 @@ describe('🧪 /users route', () => {
       .send(user)
       .expect('Content-Type', /json/)
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    userId = response.body.id
+
     expect(response.body.first_name).toBe(user.first_name)
     expect(response.body.last_name).toBe(user.last_name)
     expect(response.body.email).toBe(user.email)
+
     expect(response.status).toBe(201)
   })
 
@@ -47,8 +53,9 @@ describe('🧪 /users route', () => {
       .get('/users')
       .set('Authorization', `Bearer ${access_token}`)
 
-    expect(response.body.length).toBe(1)
-    expect(response.body[0].email).toBe(user.email)
+    usersLength = response.body.length
+
+    expect(response.body.length).toBe(usersLength)
     expect(response.status).toBe(200)
   })
 
@@ -62,7 +69,7 @@ describe('🧪 /users route', () => {
 
   it('Should get single user by id', async () => {
     const response = await request
-      .get('/users/1')
+      .get(`/users/${userId}`)
       .set('Authorization', `Bearer ${access_token}`)
 
     expect(response.body.first_name).toBe(user.first_name)
@@ -73,9 +80,30 @@ describe('🧪 /users route', () => {
 
   it('Should NOT return single user by id, instead it should return 401 due to invalid access_token', async () => {
     const response = await request
-      .get('/users/1')
+      .get(`/users/${userId}`)
       .set('Authorization', `somestuff${access_token}`)
 
     expect(response.status).toBe(401)
   })
+
+
+  it('Should NOT delete single user by id, instead it should return 401 due to invalid access_token', async () => {
+    const response = await request
+      .delete(`/users/${userId}`)
+      .set('Authorization', `somestuff${access_token}`)
+
+    expect(response.status).toBe(401)
+  })
+
+  it('Should delete single user by id', async () => {
+    const response = await request
+      .delete(`/users/${userId}`)
+      .set('Authorization', `Bearer ${access_token}`)
+
+    expect(response.body.first_name).toBe(user.first_name)
+    expect(response.body.last_name).toBe(user.last_name)
+    expect(response.body.email).toBe(user.email)
+    expect(response.status).toBe(200)
+  })
+
 })
