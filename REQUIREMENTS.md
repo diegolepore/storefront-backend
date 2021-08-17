@@ -26,6 +26,9 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Current Order by user [token required] - GET '/active-order'
 
 ## Data Shapes
+### Databases names
+- storefront_db
+- storefront_test_db
 #### Product
 - id SERIAL PRIMARY KEY,
 - name VARCHAR(255) NOT NULL,
