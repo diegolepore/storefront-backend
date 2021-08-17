@@ -73,27 +73,11 @@ const editStatus = async (req: express.Request, res: express.Response) => {
   }
 }
 
-const addOrderProducts = async (req: express.Request, res: express.Response) => {
-  try {
-    const orderId: string = req.params.id
-    const productId: string = req.body.product_id
-    const quantity: number = parseInt(req.body.quantity)
-
-    const productAddedToCart = await store.addOrderProducts(quantity, orderId, productId)
-    res.status(201)
-    res.json(productAddedToCart)
-  } catch (error) {
-    res.status(400)
-    res.json(error)
-  }
-}
-
 const orderRoutes = (app: express.Application): void => {
   app.post('/orders', verifyJWT, create)
   app.get('/orders', verifyJWT, index)
   app.get('/orders/:id', verifyJWT, show)
   app.put('/orders/:id', verifyJWT, editStatus)
-  app.post('/orders/:id/products', verifyJWT, addOrderProducts)
   app.delete('/orders/:id', verifyJWT, remove)
 }
 

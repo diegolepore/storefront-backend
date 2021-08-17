@@ -86,7 +86,6 @@ describe('⭐️ Order Model suite', () => {
   it('create method should create an order', async () => {
 
     const o = {
-      products: `[{"id": "${productId}", "quantity": "5"}]`,
       order_status: 'active'
     }
     const result: Order | undefined = await store.create({

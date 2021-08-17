@@ -27,7 +27,7 @@ Along with the corresponding type definitions, even though these are not include
 
 ### .env file I am using for the project
 
-Just create an `.env` file at the **root level** of the project, and paste all the code bellow into it.
+Just create an `.env` file in the **root** of the project, and paste all the code bellow into it.
 
 ```sh
 POSTGRES_HOST=127.0.0.1
@@ -219,12 +219,7 @@ headers : {
 }
 BODY: 
 {
-    "products": "[
-        {'id': '1', 'quantity': '2'}, 
-        {'id': '3', 'quantity': '7'}
-    ]",
-    "order_status": "active",
-    "user_id": "1"
+	"order_status": "active"
 }
 ```
 
@@ -281,6 +276,31 @@ headers : {
 }
 ```
 
+**Add product ID, quantity & order ID to order_products table:**
+```
+POST http://localhost:3000/orders/:id/products
+
+headers : {
+    Authorization: 'Bearer access_token',
+    Content-Type: application/json
+}
+
+BODY:
+{
+	"product_id": "1",
+	"quantity": "3"
+}
+```
+
+**Get products in orders**
+```
+GET http://localhost:3000/products-in-orders
+
+headers : {
+    Authorization: 'Bearer access_token'
+}
+```
+
 ### 🐳 Docker setup
 
 ```sh
@@ -313,3 +333,5 @@ In order to have automatically git hooks enabled after installation, run the fol
 ```sh
 npm run prepare
 ```
+
+

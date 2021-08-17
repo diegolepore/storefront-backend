@@ -136,33 +136,4 @@ describe('⭐️ /orders route suite', () => {
 
     expect(response.status).toBe(200)
   })
-
-  it('Should add order and product id', async () => {
-    const o = {
-      order_status: 'active'
-    }
-    const orderResponse = await request
-      .post('/orders')
-      .set('Authorization', `Bearer ${access_token}`)
-      .send(o)
-      .expect('Content-Type', /json/)
-
-    order = {
-      id: orderResponse.body.id,
-      order_status: orderResponse.body.order_status,
-      user_id: orderResponse.body.user_id
-    }
-
-    const response = await request
-      .post(`/orders/${order.id}/products`)
-      .set('Authorization', `Bearer ${access_token}`)
-      .send({ 
-        product_id: String(productId), 
-        quantity: '2'
-       })
-      .expect('Content-Type', /json/)
-
-    expect(response.status).toBe(201)
-  })
-
 })

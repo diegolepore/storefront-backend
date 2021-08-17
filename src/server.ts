@@ -3,6 +3,7 @@ import userRoutes from './handlers/users'
 import productRoutes from './handlers/products'
 import orderRoutes from './handlers/orders'
 import dashboardRoutes from './handlers/dashboard'
+import orderProductsRoutes from './handlers/order_products'
 
 let env
 const { ENV } = process.env
@@ -26,8 +27,9 @@ app.get('/', (req, res) => {
 
 userRoutes(app)
 productRoutes(app)
-orderRoutes(app)
 dashboardRoutes(app)
+orderRoutes(app)
+orderProductsRoutes(app)
 
 app.listen(port, (): void => {
   // eslint-disable-next-line no-console
