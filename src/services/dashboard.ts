@@ -13,5 +13,19 @@ export const DashboardQueries = {
     } catch (error) {
       throw new Error(`Could retrieve the order. Error: ${error}`)
     }
+  },
+
+  async productsInOrders(): Promise<{name: string, price:number, order_id: string}[]> {
+    try {
+      const conn = await client.connect()
+      const sql = 'SELECT name, price, order_id FROM products INNER JOIN order_products ON products.id=order_products.product_id'
+      const result = await conn.query(sql)
+
+      conn.release()
+
+      return result.rows
+    } catch (error) {
+      throw new Error(`unable get products and orders: ${error}`)
+    }
   }
 }

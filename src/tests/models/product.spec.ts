@@ -51,20 +51,19 @@ describe('📦 Product Model suite', () => {
     const result: Product | undefined= await store.show(String(productId))
 
     if(result) {      
-      expect(result?.id).toBe(productId)
-      expect(result?.name).toBe(product.name)
-      expect(result?.description).toBe(product.description)
-      expect(result?.price).toBe(product.price)
-      expect(result?.category).toBe(product.category)
+      expect(result.id).toBe(productId)
+      expect(result.name).toBe(product.name)
+      expect(result.description).toBe(product.description)
+      expect(result.price).toBe(product.price)
+      expect(result.category).toBe(product.category)
     }
   })
 
   it('delete method should remove the product', async () => {
-    await store.delete(String(productId))
-    const result: Product[] | undefined = await store.index()
+    const deletedProduct = await store.delete(String(productId))
+    const result: Product | undefined= await store.show(String(productId))
 
-    if(result) {
-      expect(result).toEqual([])
-    }
+    expect(deletedProduct?.name).toBe(product.name)
+    expect(result).toBeFalsy()
   })
 })

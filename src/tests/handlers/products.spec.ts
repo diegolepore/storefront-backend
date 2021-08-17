@@ -46,7 +46,7 @@ describe('📦 /products route suite', () => {
       .expect('Content-Type', /json/)
   })
 
-  it('Should create product', async () => {
+  it('Should create a product', async () => {
     const response = await request
       .post('/products')
       .set('Authorization', `Bearer ${access_token}`)

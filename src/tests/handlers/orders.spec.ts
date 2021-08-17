@@ -7,7 +7,6 @@ let userId = 0
 let productId = 0
 let order: Order = {
   id: 0,
-  products: '',
   order_status: '',
   user_id: 0
 }
@@ -33,23 +32,23 @@ describe('⭐️ /orders route suite', () => {
       .send(user)
       .expect('Content-Type', /json/)
 
-    const response = await request
+    const responseAuth = await request
       .post('/users/auth')
       .send({
-        email: user.email,
+        email: u.body.email,
         pass: user.pass
       })
       .expect('Content-Type', /json/)
 
     const p = await request
       .post('/products')
-      .set('Authorization', `Bearer ${response.body.access_token}`)
+      .set('Authorization', `Bearer ${responseAuth.body.access_token}`)
       .send(product)
       .expect('Content-Type', /json/)
 
     productId = p.body.id
     userId = u.body.id
-    access_token = response.body.access_token
+    access_token = responseAuth.body.access_token
   })
 
   afterAll( async () => {
@@ -65,27 +64,22 @@ describe('⭐️ /orders route suite', () => {
   })
 
   it('Should create an order', async () => {
-    const o = {
-      products: `[{"id": "${productId}", "quantity": "5"}]`,
-      order_status: 'active'
-    }
-
+    const order_status = 'active'
     const response = await request
       .post('/orders')
       .set('Authorization', `Bearer ${access_token}`)
-      .send(o)
+      .send({
+        order_status
+      })
       .expect('Content-Type', /json/)
 
     order = {
       id: response.body.id,
-      products: response.body.products,
       order_status: response.body.order_status,
       user_id: response.body.user_id
     }
 
-    expect(response.body.products).toBe(o.products)
-    expect(response.body.order_status).toBe(o.order_status)
-    expect(Number(response.body.user_id)).toBe(userId)
+    expect(response.body.order_status).toBe(order_status)
 
     expect(response.status).toBe(201)
   })
@@ -107,8 +101,7 @@ describe('⭐️ /orders route suite', () => {
       .get(`/orders/${order.id}`)
       .set('Authorization', `Bearer ${access_token}`)
 
-    if (order.products && order.order_status && order.user_id) {
-      expect(response.body.products).toBe(order.products)
+    if (order.order_status && order.user_id) {
       expect(response.body.order_status).toBe(order.order_status)
       expect(response.body.user_id).toBe(order.user_id)
     }
@@ -136,13 +129,40 @@ describe('⭐️ /orders route suite', () => {
       .delete(`/orders/${order.id}`)
       .set('Authorization', `Bearer ${access_token}`)
 
-    if (order.products && order.order_status && order.user_id) {
-      expect(response.body.products).toBe(order.products)
+    if (order.order_status && order.user_id) {
       expect(response.body.order_status).toBe(order.order_status)
       expect(response.body.user_id).toBe(order.user_id)
     }
 
     expect(response.status).toBe(200)
+  })
+
+  it('Should add order and product id', async () => {
+    const o = {
+      order_status: 'active'
+    }
+    const orderResponse = await request
+      .post('/orders')
+      .set('Authorization', `Bearer ${access_token}`)
+      .send(o)
+      .expect('Content-Type', /json/)
+
+    order = {
+      id: orderResponse.body.id,
+      order_status: orderResponse.body.order_status,
+      user_id: orderResponse.body.user_id
+    }
+
+    const response = await request
+      .post(`/orders/${order.id}/products`)
+      .set('Authorization', `Bearer ${access_token}`)
+      .send({ 
+        product_id: String(productId), 
+        quantity: '2'
+       })
+      .expect('Content-Type', /json/)
+
+    expect(response.status).toBe(201)
   })
 
 })

@@ -26,6 +26,9 @@ Along with the corresponding type definitions, even though these are not include
 
 
 ### .env file I am using for the project
+
+Just create an `.env` file at the **root level** of the project, and paste all the code bellow into it.
+
 ```sh
 POSTGRES_HOST=127.0.0.1
 POSTGRES_DB=storefront_db

@@ -13,8 +13,19 @@ const currentOrderByUser = async (req: express.Request, res: express.Response) =
   }
 }
 
+const productsInOrders = async (req: express.Request, res: express.Response) => {
+  try {
+    const prodsInOrders = await DashboardQueries.productsInOrders()
+    res.json(prodsInOrders)
+  } catch (error) {
+    res.status(400)
+    res.json(error)
+  }
+}
+
 const dashboardRoutes = (app: express.Application): void => {
   app.get('/active-order', verifyJWT, currentOrderByUser)
+  app.get('/products-in-orders', verifyJWT, productsInOrders)
 }
 
 export default dashboardRoutes

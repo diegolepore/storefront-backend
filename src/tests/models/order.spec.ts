@@ -7,7 +7,6 @@ let userId = 0
 let productId = 0
 let order: Order = {
   id: 0,
-  products: '',
   order_status: '',
   user_id: 0
 }
@@ -91,19 +90,16 @@ describe('⭐️ Order Model suite', () => {
       order_status: 'active'
     }
     const result: Order | undefined = await store.create({
-      products: o.products,
       order_status: o.order_status
     }, String(userId))
 
     if (result) {
       order = {
         id: result.id,
-        products: result.products,
         order_status: result.order_status,
         user_id: result.user_id
       }
 
-      expect(result.products).toBe(o.products)
       expect(result.order_status).toBe(o.order_status)
       expect(Number(result.user_id)).toBe(userId)
     }
@@ -120,7 +116,6 @@ describe('⭐️ Order Model suite', () => {
     const result: Order | undefined = await store.show(String(order.id), String(userId))
 
     if(result) {
-      expect(result.products).toBe(order.products)
       expect(result.order_status).toBe(order.order_status)
       expect(Number(result.user_id)).toBe(userId)
     }
@@ -131,7 +126,6 @@ describe('⭐️ Order Model suite', () => {
     const result: Order | undefined = await store.editStatus(String(order.id), String(userId), newOrderStatus)
 
     if(result) {
-      expect(result.products).toBe(order.products)
       expect(result.order_status).toBe(newOrderStatus)
       expect(Number(result.user_id)).toBe(userId)
     }
