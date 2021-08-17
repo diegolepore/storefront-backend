@@ -52,9 +52,9 @@ const remove = async (req: Request, res: Response) => {
 }
 
 const productRoutes = (app: express.Application): void => {
+  app.post('/products', verifyJWT, create)
   app.get('/products', index)
   app.get('/products/:id', show)
-  app.post('/products', verifyJWT, create)
   app.delete('/products/:id', verifyJWT, remove)
 }
 

@@ -42,7 +42,7 @@ export const UserStore = {
 
       conn.release()
 
-      return user
+      return excludeObjectProps(user, 'pass')
     } catch (error) {
       throw new Error(`Could not add new user. Error: ${error}`)
     }

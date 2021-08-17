@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -rf build && tsc",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build/src --onSuccess 'node ./build/src/server.js'",
-    "start": "ENV=prod node build/src/server.js",
+    "start:docker": "ENV=prod node build/src/server.js",
+    "start": "node build/src/server.js",
     "test:prod": "db-migrate --env test_prod up && ENV=test_prod jasmine-ts && db-migrate --env test_prod down -c 3",
     "test:dev": "db-migrate --env test_dev up && ENV=test_dev jasmine-ts && db-migrate --env test_dev down -c 3",
     "createdb:prod": "db-migrate --config database_create.json db:create storefront_db --env prod && db-migrate --config database_create.json db:create storefront_test_db --env test_prod",
@@ -14,7 +15,8 @@
     "migrate:prod": "db-migrate --env prod up",
     "migrate:dev": "db-migrate --env dev up",
     "lint": "eslint . --ext .ts",
-    "lint-and-fix": "eslint . --ext .ts --fix"
+    "lint-and-fix": "eslint . --ext .ts --fix",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -25,11 +27,11 @@
     "@types/jasmine": "^3.8.1",
     "@types/jsonwebtoken": "^8.5.4",
     "@types/pg": "^8.6.1",
+    "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
-    "@types/supertest": "^2.0.11",
     "eslint": "^7.30.0",
-    "nodemon": "^2.0.12",
+    "husky": "^7.0.1",
     "typescript": "^4.3.5"
   },
   "dependencies": {
