@@ -50,25 +50,55 @@ SALT_ROUNDS=10
 TOKEN_SECRET=supersecret123!
 ```
 
-### Setup, installation & running server locally  ( http://localhost:3000 )
-```sh
-npm install
+### Setup project, database, installation & running server locally 
+1. **Install npm dependencies**
+    ```sh
+    npm install
+    ```
 
-# Create databases locally
-npm run createdb:dev
-
-# Migrate tables locally
-npm run migrate:dev
-
-# Testing
-npm run test:dev
-
-# Linting
-npm run lint
-
-# Start server locally on port 3000
-npm run watch
-```
+2. **Enter psql client command line**
+    ```sh
+    psql postgres
+    ```
+ 3. **Create user**   
+    ```sh
+    CREATE USER full_stack_user WITH PASSWORD 'Pass1234';
+    ```
+ 4. **Create Databases**
+    ```sh
+    # Via npm command
+    npm run createdb:dev
+    
+    # Or, via SQL query
+    CREATE DATABASE storefront_db;
+    CREATE DATABASE storefront_test_db;
+    ```
+5. **Grant all database privileges to user in both databases**
+    ```sh
+    GRANT ALL PRIVILEGES ON DATABASE storefront_db TO full_stack_user;
+    GRANT ALL PRIVILEGES ON DATABASE storefront_test_db TO full_stack_user;
+    ```
+6. **Migrate tables**
+    ```sh
+    # Migrate tables locally
+    npm run migrate:dev
+    ```
+7. **Tests**
+    ```sh
+    # Testing
+    npm run test:dev
+    ```
+8. **Linting**
+    ```sh
+    # Linting
+    npm run lint
+    ```
+9. **Start server locally**
+    ```sh
+    # Start server locally on port 3000
+    npm run watch
+    ```
+ℹ️ _After executing the 'npm run watch' command, the API will be available at port 3000._
 
 ![gif: Lets do this!](https://media.giphy.com/media/0DYipdNqJ5n4GYATKL/giphy.gif)
 
@@ -248,7 +278,7 @@ headers : {
 }
 ```
 
-### 🐳 Docker setup ( http://localhost:3030 )
+### 🐳 Docker setup
 
 ```sh
 # After running this command the application will be running at port 3030
@@ -266,6 +296,7 @@ docker exec storefront-backend_server_1 npm run test:prod
 # Linting
 docker exec storefront-backend_server_1 npm run lint
 ```
+ℹ️ _Once docker containers are running, the API will be available at port 3030._
 
 ### Building & starting locally
 
