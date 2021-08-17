@@ -306,7 +306,7 @@ npm start
 ```
 
 ### Other
-In order to have automatically Git hooks enabled after install, run the following command. You can read more about it in the [Husky documentation](https://typicode.github.io/husky/#/?id=install).
+In order to have automatically git hooks enabled after installation, run the following command. You can read more about it in the [Husky documentation](https://typicode.github.io/husky/#/?id=install).
 ```sh
 npm run prepare
 ```
