@@ -50,7 +50,7 @@ SALT_ROUNDS=10
 TOKEN_SECRET=supersecret123!
 ```
 
-### Setup, installation & running server locally
+### Setup, installation & running server locally  ( http://localhost:3000 )
 ```sh
 npm install
 
@@ -248,7 +248,7 @@ headers : {
 }
 ```
 
-### 🐳 Docker setup
+### 🐳 Docker setup ( http://localhost:3030 )
 
 ```sh
 # After running this command the application will be running at port 3030
