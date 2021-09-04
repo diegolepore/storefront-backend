@@ -58,10 +58,14 @@ const authenticate = async (req: Request, res: Response) => {
   try {
     const user = await store.authenticate(req.body.email, req.body.pass)
     const access_token = jwt.sign({user}, process.env.TOKEN_SECRET as jwt.Secret)
-    res.json({access_token: access_token})
+    const decodedAccessToken = jwt.decode(access_token) as jwt.JwtPayload
+
+    if(decodedAccessToken.user.id) {
+      res.json({access_token: access_token})
+    }
   } catch (error) {
     res.status(401)
-    res.json(error)
+    res.json({ message: 'Whoops, it seems either your email or password are incorrect, please try again'})
   }
 }
 
