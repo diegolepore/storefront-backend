@@ -14,6 +14,7 @@ const user = {
 const product = {
 	name: 'iPhone X-pensive',
 	description: 'This smarthphone is really cool and expensive',
+  image_url: 'https://d1eh9yux7w8iql.cloudfront.net/product_images/36827_24756a33-907f-4a5a-ac95-73ce492104e7.jpg',
 	price: 800,
 	category: 'smartphones'
 }
@@ -58,6 +59,7 @@ describe('📦 /products route suite', () => {
 
     expect(response.body.name).toBe(product.name)
     expect(response.body.description).toBe(product.description)
+    expect(response.body.image_url).toBe(product.image_url)
     expect(response.body.price).toBe(product.price)
     expect(response.body.category).toBe(product.category)
 
@@ -76,6 +78,7 @@ describe('📦 /products route suite', () => {
 
     expect(response.body.name).toBe(product.name)
     expect(response.body.description).toBe(product.description)
+    expect(response.body.image_url).toBe(product.image_url)
     expect(response.body.price).toBe(product.price)
     expect(response.body.category).toBe(product.category)
     expect(response.status).toBe(200)
@@ -88,6 +91,7 @@ describe('📦 /products route suite', () => {
 
     expect(response.body.name).toBe(product.name)
     expect(response.body.description).toBe(product.description)
+    expect(response.body.image_url).toBe(product.image_url)
     expect(response.body.price).toBe(product.price)
     expect(response.body.category).toBe(product.category)
     expect(response.status).toBe(200)

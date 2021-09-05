@@ -3,6 +3,7 @@ import { Product, ProductStore as store } from '../../models/product'
 const product = {
 	name: 'Skateboard',
 	description: 'ZERO board',
+	image_url: 'https://d1eh9yux7w8iql.cloudfront.net/product_images/36827_24756a33-907f-4a5a-ac95-73ce492104e7.jpg',
 	price: 80,
 	category: 'sports'
 }
@@ -26,6 +27,7 @@ describe('📦 Product Model suite', () => {
     const result: Product | undefined = await store.create({
       name: product.name,
       description: product.description,
+      image_url: product.image_url,
       price: product.price,
       category: product.category
     })
@@ -34,6 +36,7 @@ describe('📦 Product Model suite', () => {
       productId = result.id
       expect(result.name).toBe(product.name)
       expect(result.description).toBe(product.description)
+      expect(result.image_url).toBe(product.image_url)
       expect(result.price).toBe(product.price)
       expect(result.category).toBe(product.category)
     }
@@ -54,6 +57,7 @@ describe('📦 Product Model suite', () => {
       expect(result.id).toBe(productId)
       expect(result.name).toBe(product.name)
       expect(result.description).toBe(product.description)
+      expect(result.image_url).toBe(product.image_url)
       expect(result.price).toBe(product.price)
       expect(result.category).toBe(product.category)
     }

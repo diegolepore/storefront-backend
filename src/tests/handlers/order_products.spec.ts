@@ -20,6 +20,7 @@ const user = {
 const product = {
 	name: 'iPhone X-pensive',
 	description: 'This smarthphone is really cool and expensive',
+  image_url: 'https://d1eh9yux7w8iql.cloudfront.net/product_images/36827_24756a33-907f-4a5a-ac95-73ce492104e7.jpg',
 	price: 800,
 	category: 'smartphones'
 }

@@ -13,6 +13,7 @@ const create = async (req: Request, res: Response) => {
     res.status(201)
     res.json(productAddedToCart)
   } catch (error) {
+    console.log(error)
     res.status(400)
     res.json(error)
   }

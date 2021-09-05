@@ -4,6 +4,7 @@ import productRoutes from './handlers/products'
 import orderRoutes from './handlers/orders'
 import dashboardRoutes from './handlers/dashboard'
 import orderProductsRoutes from './handlers/order_products'
+import cartRoutes from './handlers/cart'
 
 let envPort
 const { ENV } = process.env
@@ -30,6 +31,7 @@ productRoutes(app)
 dashboardRoutes(app)
 orderRoutes(app)
 orderProductsRoutes(app)
+cartRoutes(app)
 
 app.listen(port, (): void => {
   // eslint-disable-next-line no-console
