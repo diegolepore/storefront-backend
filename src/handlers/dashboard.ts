@@ -26,7 +26,6 @@ const productsInOrders = async (req: express.Request, res: express.Response) => 
 const productsInActiveOrder = async (req: express.Request, res: express.Response) => {
   try {
     const prodsInActiveOrders = await DashboardQueries.productsInActiveOrder()
-    console.log(prodsInActiveOrders)
     res.json(prodsInActiveOrders)
   } catch (error) {
     res.status(400)

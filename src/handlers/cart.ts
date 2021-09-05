@@ -11,7 +11,6 @@ const addProductToCart = async (req: express.Request, res: express.Response) => 
     )
     res.json(cartRes)
   } catch (error) {
-    console.log(error)
     res.status(400)
     res.json(error)
   }

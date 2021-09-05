@@ -17,7 +17,6 @@ const create = async (req: Request, res: Response) => {
     res.json(newUser)
   } catch (error) {
     res.status(400)
-    console.log(error)
     res.json(error)
   }
 }
