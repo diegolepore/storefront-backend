@@ -1,5 +1,5 @@
 import client from '../database'
-import { Order, OrderStore } from '../models/order'
+import { OrderStore } from '../models/order'
 import { OrderProductStore } from '../models/order_product'
 
 export const CartQueries = {
