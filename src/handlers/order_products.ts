@@ -19,8 +19,24 @@ const create = async (req: Request, res: Response) => {
   }
 }
 
+const editQuantity = async (req: Request, res: Response) => {
+    try {
+    const product_id: string = req.body.product_id
+    const quantity: number = parseInt(req.body.quantity)
+
+    const productQuantityUpdateResponse = await store.editQuantity(product_id, quantity)
+    res.status(201)
+    res.json(productQuantityUpdateResponse)
+  } catch (error) {
+    console.log(error)
+    res.status(400)
+    res.json(error)
+  }
+}
+
 const orderRoutes = (app: express.Application): void => {
   app.post('/orders/:id/products', verifyJWT, create)
+  app.patch('/orders/edit-product-quantity', verifyJWT, editQuantity)
 }
 
 export default orderRoutes

@@ -27,5 +27,20 @@ export const DashboardQueries = {
     } catch (error) {
       throw new Error(`unable get products and orders: ${error}`)
     }
+  },
+
+  async productsInActiveOrder(): Promise<{name: string, price:number, order_id: string}[]> {
+    try {
+      const conn = await client.connect()
+      // const sql = 'SELECT name, quantity, price, order_id FROM products INNER JOIN order_products ON products.id=order_products.product_id'
+      const sql = 'SELECT p.id as product_id, p.name, p.price, o.order_status, quantity, order_id FROM products p INNER JOIN order_products op ON p.id=op.product_id INNER JOIN orders o ON op.order_id=o.id WHERE o.order_status=\'active\''
+      const result = await conn.query(sql)
+
+      conn.release()
+
+      return result.rows
+    } catch (error) {
+      throw new Error(`unable get products and orders: ${error}`)
+    }
   }
 }

@@ -36,5 +36,18 @@ export const OrderProductStore = {
     } catch (error) {
       throw new Error(`Could not add new product ${productId}. Error: ${error}`)
     }
+  },
+
+  async editQuantity(product_id: string, quantity: number ): Promise<OrderProduct> {
+    try {
+      const conn = await client.connect()
+      const sql = 'UPDATE order_products SET quantity=($2) WHERE product_id=($1) RETURNING *'
+      const result = await conn.query(sql, [product_id, quantity])
+      conn.release()
+
+      return result.rows[0]
+    } catch (error) {
+      throw new Error(`Could edit the quantity. Error: ${error}`)
+    }
   }
 }
