@@ -5,6 +5,7 @@ import orderRoutes from './handlers/orders'
 import dashboardRoutes from './handlers/dashboard'
 import orderProductsRoutes from './handlers/order_products'
 import cartRoutes from './handlers/cart'
+const cors = require('cors')
 
 let envPort
 const { ENV } = process.env
@@ -21,6 +22,10 @@ const app = express()
 const port = process.env.PORT || envPort
 
 app.use(express.json())
+
+app.use(cors({
+    origin: '*'
+}))
 
 app.get('/', (req, res) => {
   res.send('Api root')

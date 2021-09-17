@@ -70,7 +70,7 @@ export const UserStore = {
       
       conn.release()
 
-      return result.rows[0]
+      return excludeObjectProps(result.rows[0], 'pass')
     } catch (error) {
       throw new Error(`Cannot get user. Error: ${error}`)
     }

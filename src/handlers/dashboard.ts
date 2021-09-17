@@ -25,7 +25,8 @@ const productsInOrders = async (req: express.Request, res: express.Response) => 
 
 const productsInActiveOrder = async (req: express.Request, res: express.Response) => {
   try {
-    const prodsInActiveOrders = await DashboardQueries.productsInActiveOrder()
+    const userIdFromVerifyJWTMiddleware = req.body.userId
+    const prodsInActiveOrders = await DashboardQueries.productsInActiveOrder(userIdFromVerifyJWTMiddleware)
     res.json(prodsInActiveOrders)
   } catch (error) {
     res.status(400)

@@ -12,8 +12,17 @@ export const CartQueries = {
       
       // IF there is an 'active' order for the current authenticated user
       if(order) {
-        const orderProductQuery = 'SELECT * FROM order_products WHERE product_id=($1)'
-        const result = await conn.query(orderProductQuery, [productId])
+        // const orderProductQuery = 'SELECT * FROM order_products WHERE product_id=($1)'
+        const orderProductQuery = `SELECT p.id as product_id, op.order_id, u.id as user_id, o.order_status as order_status 
+        FROM products p 
+        INNER JOIN order_products op ON p.id=op.product_id 
+        INNER JOIN orders o ON op.order_id=o.id 
+        INNER JOIN users u ON o.user_id=u.id 
+        WHERE o.order_status='active' 
+        AND u.id=($1) 
+        AND p.id=($2)`
+        
+        const result = await conn.query(orderProductQuery, [userId, productId])
         const orderProducts = result.rows[0]
         
         conn.release()
@@ -34,19 +43,20 @@ export const CartQueries = {
     } catch (error) {
       throw new Error(`${error}`)
     }
-    
-    // try {
-    //   const sql = 'INSERT INTO order_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *'
-    //   const conn = await client.connect()
-    //   const result = await conn.query(sql, [quantity, orderId, productId])
-    //   const order = result.rows[0]
+  },
 
-    //   conn.release()
+  async deleteProductFromCart(order_id: string, product_id: string): Promise<unknown> {
+    try {
+      const sql = 'DELETE FROM order_products WHERE order_id=($1) AND product_id=($2) RETURNING *'
+      const conn = await client.connect()
+      const result = await conn.query(sql, [order_id, product_id])
+        
+      conn.release()
 
-    //   return order
+      return result.rows[0]
 
-    // } catch (error) {
-    //   throw new Error(`Could not add new product ${productId}. Error: ${error}`)
-    // }
+    } catch (error) {
+      throw new Error(`${error}`)
+    }
   }
 }
