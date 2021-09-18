@@ -33,7 +33,7 @@ export const DashboardQueries = {
     try {
       const conn = await client.connect()
       // const sql = 'SELECT name, quantity, price, order_id FROM products INNER JOIN order_products ON products.id=order_products.product_id'
-      const sql = 'SELECT p.id as product_id, p.name, p.price, p.image_url, o.order_status, quantity, order_id FROM products p INNER JOIN order_products op ON p.id=op.product_id INNER JOIN orders o ON op.order_id=o.id WHERE o.order_status=\'active\' AND o.user_id=($1)'
+      const sql = 'SELECT p.id as product_id, p.name, p.price, p.image_url, o.order_status, quantity, order_id FROM products p INNER JOIN order_products op ON p.id=op.product_id INNER JOIN orders o ON op.order_id=o.id WHERE o.order_status=\'active\' AND o.user_id=($1) ORDER BY p.id ASC'
       const result = await conn.query(sql, [userId])
 
       conn.release()
