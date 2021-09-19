@@ -9,7 +9,7 @@ services:
     image: 'postgres'
     restart: always
     ports:
-      - 4321:5432
+      - '4321:5432'
     environment:
       POSTGRES_USER: 'full_stack_user'
       POSTGRES_PASSWORD: '123456'
@@ -21,6 +21,6 @@ services:
         PGADMIN_DEFAULT_EMAIL: "test@gmail.com"
         PGADMIN_DEFAULT_PASSWORD: "test123!"
     ports: 
-        - "16543:80"
+        - '16543:80'
     depends_on: 
         - db  
