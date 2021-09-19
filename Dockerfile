@@ -4,12 +4,4 @@ WORKDIR /app
 
 COPY ./ ./
 
-RUN npm install
-
-RUN npm run build
-
-RUN npm run createdb:prod
-
-RUN npm run migrate:prod
-
-CMD npm run start:docker
+CMD npm install && npm run build && npm run start:docker && npm run createdb:prod && npm run migrate:prod
