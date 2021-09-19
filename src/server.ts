@@ -23,9 +23,7 @@ const port = process.env.PORT || envPort
 
 app.use(express.json())
 
-app.use(cors({
-    origin: '*'
-}))
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.send('Api root')
