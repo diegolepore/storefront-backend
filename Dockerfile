@@ -4,8 +4,7 @@ WORKDIR /app
 
 COPY ./ ./
 
-RUN npm install
+RUN npm install \
+  && npm run build
 
-RUN npm run build
-
-CMD npm run start:docker
+CMD ["npm", "run", "start:docker"]
