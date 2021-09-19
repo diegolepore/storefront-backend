@@ -1,6 +1,6 @@
 # Storefront backend
 
-### Dependencies used 
+### 📦 Dependencies used 
 Along with the corresponding type definitions, even though these are not included in the list below.
 
 | Name | Link |
