@@ -1,6 +1,9 @@
 version: "3.9"
 
 services: 
+  web: 
+    build: .
+    image: diegopalaciosdocker/storefront-backend
   server:
     build: .
     ports: 
@@ -26,12 +29,3 @@ services:
       POSTGRES_PASSWORD: '123456'
     volumes: 
       - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
-  pgadmin-compose:
-    image: dpage/pgadmin4
-    environment: 
-        PGADMIN_DEFAULT_EMAIL: "test@gmail.com"
-        PGADMIN_DEFAULT_PASSWORD: "test123!"
-    ports: 
-        - '16543:80'
-    depends_on: 
-        - db  
