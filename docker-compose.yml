@@ -6,16 +6,7 @@ services:
     ports: 
       - '3030:3030'
     environment:
-      POSTGRES_PROD_HOST: db
-      POSTGRES_PROD_DB: storefront_db
-      POSTGRES_PROD_TEST_DB: storefront_test_db
-      POSTGRES_PROD_USER: full_stack_user
-      POSTGRES_PROD_PASSWORD: 123456
-      ENV: dev
-      APP_PORT: 3200
-      APP_PROD_PORT: 3030
-      BCRYPT_PASSWORD: your-secret-password
-      SALT_ROUNDS: 10
+      ENV: prod
   db:
     image: 'postgres'
     restart: always
@@ -26,3 +17,4 @@ services:
       POSTGRES_PASSWORD: '123456'
     volumes: 
       - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+      - ./postgres-data:/var/lib/postgresql/data

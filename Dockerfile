@@ -7,4 +7,6 @@ COPY ./ ./
 RUN npm install \
   && npm run build
 
+EXPOSE 3030
+
 CMD ["npm", "run", "start:docker"]
