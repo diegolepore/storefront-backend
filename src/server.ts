@@ -10,12 +10,14 @@ const cors = require('cors')
 let envPort
 const { ENV } = process.env
 
-if (ENV === 'test_dev' || ENV === 'test_prod') {
+if (ENV === 'test_dev' || ENV === 'test_aws') {
   envPort = 3333
 } else if (ENV === 'dev') {
   envPort = process.env.APP_PORT
-} else if (ENV === 'prod') {
+} else if (ENV === 'production') {
   envPort = process.env.APP_PROD_PORT
+} else if (ENV === 'staging') {
+  envPort = process.env.APP_STAGING_PORT
 }
 
 const app = express()
