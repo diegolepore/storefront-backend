@@ -10,7 +10,6 @@
     "test:dev": "db-migrate --env test_dev up && ENV=test_dev jasmine-ts && db-migrate --env test_dev down -c 5",
     "build": "rm -rf build && tsc",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build/src --onSuccess 'node ./build/src/server.js'",
-    "start": "ENV=production npm run watch",
     "start:production": "ENV=production node build/src/server.js",
     "start:staging": "ENV=staging node build/src/server.js",
     "start:dev": "node build/src/server.js",
@@ -34,10 +33,10 @@
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
     "eslint": "^7.30.0",
-    "husky": "^7.0.1",
-    "typescript": "^4.3.5"
+    "husky": "^7.0.1"
   },
   "dependencies": {
+    "typescript": "^4.3.5",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "db-migrate": "^0.11.12",
