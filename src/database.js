@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import { Pool, PoolConfig } from 'pg'
+import { Pool } from 'pg'
 import { parse } from 'pg-connection-string'
 
 // parse('postgres://someuser:somepassword@somehost:381/somedatabase')
@@ -20,28 +20,28 @@ const {
 let client
 
 if(ENV === 'dev') {
-  const config = parse(DATABASE_DEV_URL as string) as unknown as PoolConfig
+  const config = parse(DATABASE_DEV_URL)
   client = new Pool(config)
 }
 
 if(ENV === 'test_dev') {
-  const config = parse(DATABASE_TEST_DEV_URL as string) as unknown as PoolConfig
+  const config = parse(DATABASE_TEST_DEV_URL)
   client = new Pool(config)
 }
 
 if(ENV === 'production') {
-  const config = parse(DATABASE_PROD_URL as string) as unknown as PoolConfig
+  const config = parse(DATABASE_PROD_URL)
   client = new Pool(config)
 }
 
 if(ENV === 'staging') {
-  const config = parse(DATABASE_STAGING_URL as string) as unknown as PoolConfig
+  const config = parse(DATABASE_STAGING_URL)
   client = new Pool(config)
 }
   
 if(ENV === 'test_aws') {
-  const config = parse(DATABASE_TEST_AWS as string) as unknown as PoolConfig
+  const config = parse(DATABASE_TEST_AWS)
   client = new Pool(config)
 }
 
-export default client as Pool
+export default client

@@ -1,10 +1,10 @@
-import express, { Request, Response } from 'express'
-import { User, UserStore as store } from '../models/user'
+// import express, { Request, Response } from 'express'
+import { UserStore as store } from '../models/user'
 import jwt from 'jsonwebtoken'
 import { verifyJWT } from '../middleware/auth.middleware'
 
-const create = async (req: Request, res: Response) => {
-  const user: User = {
+const create = async (req, res) => {
+  const user = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
@@ -21,7 +21,7 @@ const create = async (req: Request, res: Response) => {
   }
 }
 
-const index = async (req: Request, res: Response) => {
+const index = async (req, res) => {
   try {
     const user = await store.index()
     res.json(user)
@@ -31,9 +31,9 @@ const index = async (req: Request, res: Response) => {
   }
 }
 
-const show = async (req: Request, res: Response) => {
+const show = async (req, res) => {
   try {
-    const id: string = req.params.id
+    const id = req.params.id
     const user = await store.show(id)
     res.json(user)
   } catch (error) {
@@ -42,9 +42,9 @@ const show = async (req: Request, res: Response) => {
   }
 }
 
-const remove = async (req: Request, res: Response) => {
+const remove = async (req, res) => {
   try {
-    const id: string = req.params.id
+    const id = req.params.id
     const user = await store.delete(id)
     res.json(user)
   } catch (error) {
@@ -53,11 +53,11 @@ const remove = async (req: Request, res: Response) => {
   }
 }
 
-const authenticate = async (req: Request, res: Response) => {
+const authenticate = async (req, res) => {
   try {
     const user = await store.authenticate(req.body.email, req.body.pass)
-    const access_token = jwt.sign({user}, process.env.TOKEN_SECRET as jwt.Secret)
-    const decodedAccessToken = jwt.decode(access_token) as jwt.JwtPayload
+    const access_token = jwt.sign({user}, process.env.TOKEN_SECRET)
+    const decodedAccessToken = jwt.decode(access_token)
 
     if(decodedAccessToken.user.id) {
       res.json({access_token: access_token})
@@ -68,7 +68,7 @@ const authenticate = async (req: Request, res: Response) => {
   }
 }
 
-const userRoutes = (app: express.Application): void => {
+const userRoutes = (app) => {
   app.post('/users', create)
   app.post('/users/auth', authenticate)
   app.get('/users', verifyJWT, index)

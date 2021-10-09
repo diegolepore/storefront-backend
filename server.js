@@ -1,10 +1,10 @@
 import express from 'express'
-import userRoutes from './handlers/users'
-import productRoutes from './handlers/products'
-import orderRoutes from './handlers/orders'
-import dashboardRoutes from './handlers/dashboard'
-import orderProductsRoutes from './handlers/order_products'
-import cartRoutes from './handlers/cart'
+import userRoutes from './src/handlers/users'
+import productRoutes from './src/handlers/products'
+import orderRoutes from './src/handlers/orders'
+import dashboardRoutes from './src/handlers/dashboard'
+import orderProductsRoutes from './src/handlers/order_products'
+import cartRoutes from './src/handlers/cart'
 const cors = require('cors')
 
 let envPort
@@ -38,7 +38,7 @@ orderRoutes(app)
 orderProductsRoutes(app)
 cartRoutes(app)
 
-app.listen(port, (): void => {
+app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Server started at http://localhost:${port}`)
 })

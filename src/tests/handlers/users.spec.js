@@ -1,5 +1,5 @@
 import supertest from 'supertest'
-import app from '../../server'
+import app from '../../../server'
 import jwt from 'jsonwebtoken'
 
 const request = supertest(app)
@@ -41,7 +41,7 @@ describe('👤 /users route suite', () => {
       .expect('Content-Type', /json/)
 
     access_token = response.body.access_token
-    const decodedJwt = jwt.decode(access_token) as jwt.JwtPayload
+    const decodedJwt = jwt.decode(access_token)
     expect(user.email).toBe(decodedJwt.user.email)
     expect(response.status).toBe(200)
   })

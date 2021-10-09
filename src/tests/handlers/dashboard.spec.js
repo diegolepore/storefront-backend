@@ -1,11 +1,11 @@
-import { Order } from '../../models/order'
+// import { Order } from '../../models/order'
 import supertest from 'supertest'
-import app from '../../server'
+import app from '../../../server'
 
 let access_token = ''
 let userId = 0
 let productId = 0
-let order: Order = {
+let order = {
   id: 0,
   order_status: '',
   user_id: 0

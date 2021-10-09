@@ -1,16 +1,16 @@
 import client from '../database'
 
-export type Product = {
-  id?: number,
-  name: string,
-  description: string,
-  image_url: string,
-  price: number,
-  category: string
-}
+// export type Product = {
+//   id?: number,
+//   name,
+//   description,
+//   image_url,
+//   price: number,
+//   category
+// }
 
 export const ProductStore = {
-  async create(p: Product): Promise<Product | undefined> {
+  async create(p) {
     try {
       const conn = await client.connect()
       const sql = 'INSERT INTO products (name, description, image_url, price, category) VALUES ($1, $2, $3, $4, $5) RETURNING *'
@@ -24,7 +24,7 @@ export const ProductStore = {
     }
   },
 
-  async index(): Promise<Product[] | undefined> {
+  async index() {
     try {
       const conn = await client.connect()
       const sql = 'SELECT * FROM products'
@@ -37,7 +37,7 @@ export const ProductStore = {
     }
   },
 
-  async show(id: string): Promise<Product | undefined> {
+  async show(id) {
     try {
       const conn = await client.connect()
       const sql = 'SELECT * FROM products WHERE id=($1)'
@@ -51,7 +51,7 @@ export const ProductStore = {
     }
   },
 
-  async delete(id: string): Promise<Product | undefined> {
+  async delete(id) {
     try {
       const conn = await client.connect()
       const sql = 'DELETE FROM products WHERE id=($1) RETURNING *'

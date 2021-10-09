@@ -1,8 +1,8 @@
-import express from 'express'
+// import express from 'express'
 import { DashboardQueries } from '../services/dashboard'
 import { verifyJWT } from '../middleware/auth.middleware'
 
-const currentOrderByUser = async (req: express.Request, res: express.Response) => {
+const currentOrderByUser = async (req, res) => {
   try {
     const userIdFromVerifyJWTMiddleware = req.body.userId
     const activeOrder = await DashboardQueries.currentOrderByUser(userIdFromVerifyJWTMiddleware)
@@ -13,7 +13,7 @@ const currentOrderByUser = async (req: express.Request, res: express.Response) =
   }
 }
 
-const productsInOrders = async (req: express.Request, res: express.Response) => {
+const productsInOrders = async (req, res) => {
   try {
     const prodsInOrders = await DashboardQueries.productsInOrders()
     res.json(prodsInOrders)
@@ -23,7 +23,7 @@ const productsInOrders = async (req: express.Request, res: express.Response) => 
   }
 }
 
-const productsInActiveOrder = async (req: express.Request, res: express.Response) => {
+const productsInActiveOrder = async (req, res) => {
   try {
     const userIdFromVerifyJWTMiddleware = req.body.userId
     const prodsInActiveOrders = await DashboardQueries.productsInActiveOrder(userIdFromVerifyJWTMiddleware)
@@ -34,7 +34,7 @@ const productsInActiveOrder = async (req: express.Request, res: express.Response
   }
 }
 
-const dashboardRoutes = (app: express.Application): void => {
+const dashboardRoutes = (app) => {
   app.get('/active-order', verifyJWT, currentOrderByUser)
   app.get('/products-in-orders', verifyJWT, productsInOrders)
   app.get('/products-in-active-order', verifyJWT, productsInActiveOrder)

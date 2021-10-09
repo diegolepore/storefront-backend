@@ -1,11 +1,11 @@
 import { DashboardQueries } from '../../services/dashboard'
 import { User } from '../../models/user'
 import supertest from 'supertest'
-import app from '../../server'
+import app from '../../../server'
 import jwt from 'jsonwebtoken'
 
 let access_token = ''
-let userFromJWT: User = {}
+let userFromJWT = {}
 let productId = 0
 let order = {
   id: 0,
@@ -13,7 +13,7 @@ let order = {
   user_id: 0
 }
 const request = supertest(app)
-const user: User = {
+const user = {
   first_name: 'Sponge',
   last_name: 'Bob',
   email: 'spongebob@test.com',
@@ -46,7 +46,7 @@ describe('👾 Dashboard model suite', () => {
 
     productId = p.body.id
     access_token = responseAuth.body.access_token
-    userFromJWT = (jwt.decode(access_token) as jwt.JwtPayload).user as User
+    userFromJWT = (jwt.decode(access_token)).user
 
     const responseOrder = await request
       .post('/orders')

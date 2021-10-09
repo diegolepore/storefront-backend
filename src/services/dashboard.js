@@ -1,8 +1,8 @@
 import client from '../database'
-import { Order } from '../models/order'
+// import { Order } from '../models/order'
 
 export const DashboardQueries = {
-  async currentOrderByUser(userId: string): Promise<Order | undefined> {
+  async currentOrderByUser(userId) {
     try {
       const conn = await client.connect()
       const sql = 'SELECT * FROM orders WHERE user_id=($1) AND order_status=\'active\''
@@ -15,7 +15,7 @@ export const DashboardQueries = {
     }
   },
 
-  async productsInOrders(): Promise<{name: string, price:number, order_id: string}[]> {
+  async productsInOrders() {
     try {
       const conn = await client.connect()
       const sql = 'SELECT name, price, order_id FROM products INNER JOIN order_products ON products.id=order_products.product_id'
@@ -29,7 +29,7 @@ export const DashboardQueries = {
     }
   },
 
-  async productsInActiveOrder(userId: string): Promise<{name: string, price:number, order_id: string}[]> {
+  async productsInActiveOrder(userId) {
     try {
       const conn = await client.connect()
       // const sql = 'SELECT name, quantity, price, order_id FROM products INNER JOIN order_products ON products.id=order_products.product_id'

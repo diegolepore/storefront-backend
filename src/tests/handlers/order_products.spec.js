@@ -1,21 +1,20 @@
-import { Order } from '../../models/order'
-import { OrderProductStore as store } from '../../models/order_product'
+// import { Order } from '../../models/order'
 import supertest from 'supertest'
-import app from '../../server'
+import app from '../../../server'
 
 let access_token = ''
 let userId = 0
 let productId = 0
-let order: Order = {
+let order = {
   id: 0,
   order_status: '',
   user_id: 0
 }
 const request = supertest(app)
 const user = {
-  first_name: 'Bill',
-  last_name: 'Gates',
-  email: 'billgates@test.com',
+  first_name: 'Sponge',
+  last_name: 'Bob',
+  email: 'spongebob@test.com',
   pass: 'Pass1234'
 }
 const product = {
@@ -26,7 +25,7 @@ const product = {
 	category: 'smartphones'
 }
 
-describe('👽 Order products model suite', () => {
+describe('👽 Order products route suite', () => {
 
   beforeAll( async () => {
     const u = await request
@@ -34,23 +33,23 @@ describe('👽 Order products model suite', () => {
       .send(user)
       .expect('Content-Type', /json/)
 
-    const response = await request
+    const responseAuth = await request
       .post('/users/auth')
       .send({
-        email: user.email,
+        email: u.body.email,
         pass: user.pass
       })
       .expect('Content-Type', /json/)
 
     const p = await request
       .post('/products')
-      .set('Authorization', `Bearer ${response.body.access_token}`)
+      .set('Authorization', `Bearer ${responseAuth.body.access_token}`)
       .send(product)
       .expect('Content-Type', /json/)
 
     productId = p.body.id
     userId = u.body.id
-    access_token = response.body.access_token
+    access_token = responseAuth.body.access_token
 
     const o = {
       order_status: 'active'
@@ -80,20 +79,19 @@ describe('👽 Order products model suite', () => {
       .expect('Content-Type', /json/)
   })
 
-  it('should have an create method', () => {
-    expect(store.create).toBeDefined()
-  })
-
-
   it('Should add order and product id', async () => {
-    const orderProd = { 
-      product_id: String(productId), 
-      quantity: 2
-    }
-    const result = await store.create(orderProd.quantity, String(order.id), orderProd.product_id)
+    const response = await request
+      .post(`/orders/${order.id}/products`)
+      .set('Authorization', `Bearer ${access_token}`)
+      .send({ 
+        product_id: String(productId), 
+        quantity: '2'
+       })
+      .expect('Content-Type', /json/)
 
-    expect(result.quantity).toBe(orderProd.quantity)
-    expect(result.product_id).toBe(orderProd.product_id)
-    expect(result.order_id).toBe(String(order.id))
+    expect(response.status).toBe(201)
   })
 })
+
+
+

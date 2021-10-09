@@ -4,13 +4,13 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "lint": "eslint . --ext .ts",
-    "lint-and-fix": "eslint . --ext .ts --fix",
-    "test:aws": "db-migrate --env test_aws up && ENV=test_aws jasmine-ts && db-migrate --env test_aws down -c 5",
-    "test:dev": "db-migrate --env test_dev up && ENV=test_dev jasmine-ts && db-migrate --env test_dev down -c 5",
+    "lint": "eslint . --ext .js",
+    "lint-and-fix": "eslint . --ext .js --fix",
+    "test:aws": "db-migrate --env test_aws up && ENV=test_aws jasmine && db-migrate --env test_aws down -c 5",
+    "test:dev": "db-migrate --env test_dev up && ENV=test_dev jasmine && db-migrate --env test_dev down -c 5",
     "build": "rm -rf build && tsc",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build/src --onSuccess 'node ./build/src/server.js'",
-    "start": "ENV=production node build/src/server.js",
+    "start": "ENV=production babel-node server.js",
     "start:staging": "ENV=staging node build/src/server.js",
     "start:dev": "node build/src/server.js",
     "migrate:production": "db-migrate --env production up",
@@ -24,19 +24,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/express": "^4.17.13",
-    "@types/jasmine": "^3.8.1",
-    "@types/jsonwebtoken": "^8.5.4",
-    "@types/pg": "^8.6.1",
-    "@types/supertest": "^2.0.11",
-    "@typescript-eslint/eslint-plugin": "^4.28.3",
-    "@typescript-eslint/parser": "^4.28.3",
+    "@babel/core": "^7.15.8",
+    "@babel/register": "^7.15.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
     "eslint": "^7.30.0",
     "husky": "^7.0.1"
   },
   "dependencies": {
-    "typescript": "^4.3.5",
+    "@babel/node": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "db-migrate": "^0.11.12",
@@ -45,12 +42,9 @@
     "express": "^4.17.1",
     "jasmine": "^3.8.0",
     "jasmine-spec-reporter": "^7.0.0",
-    "jasmine-ts": "^0.4.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",
     "pg-connection-string": "^2.5.0",
-    "supertest": "^6.1.3",
-    "ts-node": "^10.1.0",
-    "tsc-watch": "^4.4.0"
+    "supertest": "^6.1.3"
   }
 }

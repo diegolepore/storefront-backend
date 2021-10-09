@@ -1,8 +1,8 @@
-import express from 'express'
+// import express from 'express'
 import { CartQueries } from '../services/cart'
 import { verifyJWT } from '../middleware/auth.middleware'
 
-const addProductToCart = async (req: express.Request, res: express.Response) => {
+const addProductToCart = async (req, res) => {
   try {
     const userIdFromVerifyJWTMiddleware = req.body.userId
     const cartRes = await CartQueries.addProductToCart(
@@ -17,7 +17,7 @@ const addProductToCart = async (req: express.Request, res: express.Response) => 
   }
 }
 
-const deleteProductFromCart = async (req: express.Request, res: express.Response) => {
+const deleteProductFromCart = async (req, res) => {
   try {
     const deleteProductFromCartRes = await CartQueries.deleteProductFromCart(
       req.params.order_id,
@@ -30,7 +30,7 @@ const deleteProductFromCart = async (req: express.Request, res: express.Response
   }
 }
 
-const cartRoutes = (app: express.Application): void => {
+const cartRoutes = (app) => {
   app.post('/add-to-cart', verifyJWT, addProductToCart)
   app.delete('/delete-porduct-from-cart/order/:order_id/product/:product_id', verifyJWT, deleteProductFromCart)
 }

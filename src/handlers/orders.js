@@ -1,10 +1,10 @@
-import express, { Request, Response } from 'express'
-import { Order, OrderStore as store } from '../models/order'
+// import express, { Request, Response } from 'express'
+import { OrderStore as store } from '../models/order'
 import { verifyJWT } from '../middleware/auth.middleware'
 
-const create = async (req: Request, res: Response) => {
+const create = async (req, res) => {
   try {
-    const order: Order = {
+    const order = {
       order_status: req.body.order_status,
       user_id: req.body.user_id
     }
@@ -22,7 +22,7 @@ const create = async (req: Request, res: Response) => {
   }
 }
 
-const index = async (req: express.Request, res: express.Response) => {
+const index = async (req, res) => {
   try {
     const userIdFromDecodedJWTMiddleware = req.body.userId
     const result = await store.index(userIdFromDecodedJWTMiddleware)
@@ -33,7 +33,7 @@ const index = async (req: express.Request, res: express.Response) => {
   }
 }
 
-const show = async (req: express.Request, res: express.Response) => {
+const show = async (req, res) => {
   try {
     const userIdFromDecodedJWTMiddleware = req.body.userId
     const result = await store.show(req.params.id, userIdFromDecodedJWTMiddleware)
@@ -44,7 +44,7 @@ const show = async (req: express.Request, res: express.Response) => {
   }
 }
 
-const remove = async (req: express.Request, res: express.Response) => {
+const remove = async (req, res) => {
   try {
     const userIdFromDecodedJWTMiddleware = req.body.userId
     const result = await store.delete(
@@ -58,7 +58,7 @@ const remove = async (req: express.Request, res: express.Response) => {
   }
 }
 
-const editStatus = async (req: express.Request, res: express.Response) => {
+const editStatus = async (req, res) => {
   try {
     const userIdFromDecodedJWTMiddleware = req.body.userId
     const result = await store.editStatus(
@@ -73,7 +73,7 @@ const editStatus = async (req: express.Request, res: express.Response) => {
   }
 }
 
-const orderRoutes = (app: express.Application): void => {
+const orderRoutes = (app) => {
   app.post('/orders', verifyJWT, create)
   app.get('/orders', verifyJWT, index)
   app.get('/orders/:id', verifyJWT, show)

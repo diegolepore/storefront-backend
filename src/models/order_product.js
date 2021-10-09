@@ -1,13 +1,13 @@
 import client from '../database'
 
-export type OrderProduct = {
-  quantity: number,
-  order_id: string,
-  product_id: string
-}
+// export type OrderProduct = {
+//   quantity: number,
+//   order_id,
+//   product_id
+// }
 
 export const OrderProductStore = {
-  async create(quantity: number, orderId: string, productId: string ): Promise<OrderProduct> {
+  async create(quantity, orderId, productId) {
     try {
       const ordersql = 'SELECT * FROM orders WHERE id=($1)'
       const conn = await client.connect()
@@ -38,7 +38,7 @@ export const OrderProductStore = {
     }
   },
 
-  async editQuantity(product_id: string, quantity: number ): Promise<OrderProduct> {
+  async editQuantity(product_id, quantity) {
     try {
       const conn = await client.connect()
       const sql = 'UPDATE order_products SET quantity=($2) WHERE product_id=($1) RETURNING *'
