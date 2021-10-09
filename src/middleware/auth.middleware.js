@@ -1,7 +1,7 @@
 // import express from 'express'
-import jwt from 'jsonwebtoken'
+const jwt = require('jsonwebtoken')
 
-export const verifyJWT = (req, res, next) => {
+const verifyJWT = (req, res, next) => {
   try {
     const authorizationHeader = (req.headers.authorization)
     const token = authorizationHeader.split(' ')[1]
@@ -17,3 +17,5 @@ export const verifyJWT = (req, res, next) => {
     return
   }
 }
+
+module.exports = { verifyJWT }

@@ -1,11 +1,12 @@
-import express from 'express'
-import userRoutes from './src/handlers/users'
-import productRoutes from './src/handlers/products'
-import orderRoutes from './src/handlers/orders'
-import dashboardRoutes from './src/handlers/dashboard'
-import orderProductsRoutes from './src/handlers/order_products'
-import cartRoutes from './src/handlers/cart'
+const express = require('express')
+const userRoutes = require('./src/handlers/users')
+const productRoutes = require('./src/handlers/products')
+const orderRoutes = require('./src/handlers/orders')
+const dashboardRoutes = require('./src/handlers/dashboard')
+const orderProductsRoutes = require('./src/handlers/order_products')
+const cartRoutes = require('./src/handlers/cart')
 const cors = require('cors')
+require('regenerator-runtime/runtime')
 
 let envPort
 const { ENV } = process.env
@@ -43,7 +44,7 @@ app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
 })
 
-export default app
+module.exports = app
 
 
 

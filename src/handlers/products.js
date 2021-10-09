@@ -1,6 +1,6 @@
 // import express, { Request, Response } from 'express'
-import { ProductStore as store } from '../models/product'
-import { verifyJWT } from '../middleware/auth.middleware'
+const store = require('../models/product').ProductStore
+const verifyJWT = require('../middleware/auth.middleware').verifyJWT
 
 const create = async (req, res) => {
   const products = {
@@ -59,4 +59,4 @@ const productRoutes = (app) => {
   app.delete('/products/:id', verifyJWT, remove)
 }
 
-export default productRoutes
+module.exports = productRoutes

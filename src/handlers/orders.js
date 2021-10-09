@@ -1,6 +1,6 @@
 // import express, { Request, Response } from 'express'
-import { OrderStore as store } from '../models/order'
-import { verifyJWT } from '../middleware/auth.middleware'
+const store = require('../models/order').OrderStore
+const verifyJWT = require('../middleware/auth.middleware').verifyJWT
 
 const create = async (req, res) => {
   try {
@@ -81,4 +81,4 @@ const orderRoutes = (app) => {
   app.delete('/orders/:id', verifyJWT, remove)
 }
 
-export default orderRoutes
+module.exports = orderRoutes

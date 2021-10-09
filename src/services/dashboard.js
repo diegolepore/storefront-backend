@@ -1,7 +1,7 @@
-import client from '../database'
+const client = require('../database')
 // import { Order } from '../models/order'
 
-export const DashboardQueries = {
+const DashboardQueries = {
   async currentOrderByUser(userId) {
     try {
       const conn = await client.connect()
@@ -44,3 +44,5 @@ export const DashboardQueries = {
     }
   }
 }
+
+module.exports = { DashboardQueries }

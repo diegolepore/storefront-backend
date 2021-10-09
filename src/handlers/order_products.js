@@ -1,6 +1,6 @@
 // import express, { Request, Response } from 'express'
-import { OrderProductStore as store } from '../models/order_product'
-import { verifyJWT } from '../middleware/auth.middleware'
+const store = require('../models/order_product').OrderProductStore
+const verifyJWT = require('../middleware/auth.middleware').verifyJWT
 
 
 const create = async (req, res) => {
@@ -37,4 +37,4 @@ const orderRoutes = (app) => {
   app.patch('/orders/edit-product-quantity', verifyJWT, editQuantity)
 }
 
-export default orderRoutes
+module.exports = orderRoutes

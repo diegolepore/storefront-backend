@@ -1,6 +1,6 @@
 // import express from 'express'
-import { CartQueries } from '../services/cart'
-import { verifyJWT } from '../middleware/auth.middleware'
+const CartQueries = require('../services/cart').CartQueries
+const verifyJWT = require('../middleware/auth.middleware').verifyJWT
 
 const addProductToCart = async (req, res) => {
   try {
@@ -35,4 +35,4 @@ const cartRoutes = (app) => {
   app.delete('/delete-porduct-from-cart/order/:order_id/product/:product_id', verifyJWT, deleteProductFromCart)
 }
 
-export default cartRoutes
+module.exports = cartRoutes

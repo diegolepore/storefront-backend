@@ -1,6 +1,6 @@
 // import express from 'express'
-import { DashboardQueries } from '../services/dashboard'
-import { verifyJWT } from '../middleware/auth.middleware'
+const DashboardQueries =  require('../services/dashboard')
+const verifyJWT =  require('../middleware/auth.middleware').verifyJWT
 
 const currentOrderByUser = async (req, res) => {
   try {
@@ -40,4 +40,4 @@ const dashboardRoutes = (app) => {
   app.get('/products-in-active-order', verifyJWT, productsInActiveOrder)
 }
 
-export default dashboardRoutes
+module.exports = dashboardRoutes

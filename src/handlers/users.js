@@ -1,7 +1,7 @@
 // import express, { Request, Response } from 'express'
-import { UserStore as store } from '../models/user'
-import jwt from 'jsonwebtoken'
-import { verifyJWT } from '../middleware/auth.middleware'
+const store = require('../models/user').UserStore
+const jwt = require('jsonwebtoken')
+const verifyJWT = require('../middleware/auth.middleware').verifyJWT
 
 const create = async (req, res) => {
   const user = {
@@ -76,4 +76,4 @@ const userRoutes = (app) => {
   app.delete('/users/:id', verifyJWT, remove)
 }
 
-export default userRoutes
+module.exports = userRoutes

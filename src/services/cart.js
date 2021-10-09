@@ -1,8 +1,8 @@
-import client from '../database'
-import { OrderStore } from '../models/order'
-import { OrderProductStore } from '../models/order_product'
+const client =  require('../database')
+const OrderStore = require('../models/order').OrderStore
+const OrderProductStore = require('../models/order_product').OrderProductStore
 
-export const CartQueries = {
+const CartQueries = {
   async addProductToCart(userId, productId, quantity ) {
     try {
       const ordersql = 'SELECT * FROM orders WHERE user_id=($1) AND order_status=\'active\''
@@ -60,3 +60,5 @@ export const CartQueries = {
     }
   }
 }
+
+module.exports = { CartQueries }

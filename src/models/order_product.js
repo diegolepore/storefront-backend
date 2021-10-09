@@ -1,4 +1,4 @@
-import client from '../database'
+const client = require('../database')
 
 // export type OrderProduct = {
 //   quantity: number,
@@ -6,7 +6,7 @@ import client from '../database'
 //   product_id
 // }
 
-export const OrderProductStore = {
+const OrderProductStore = {
   async create(quantity, orderId, productId) {
     try {
       const ordersql = 'SELECT * FROM orders WHERE id=($1)'
@@ -51,3 +51,5 @@ export const OrderProductStore = {
     }
   }
 }
+
+module.exports = { OrderProductStore }

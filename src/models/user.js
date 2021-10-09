@@ -1,5 +1,5 @@
-import client from '../database'
-import bcrypt from 'bcrypt'
+const client = require('../database')
+const bcrypt = require('bcrypt')
 
 // export type User = {
 //   id?: number,
@@ -28,7 +28,7 @@ const excludeObjectProps = (objToFilter, prop) => {
   }, {})
 }
 
-export const UserStore = {
+const UserStore = {
   async create(u) {
     try {
       const sql = 'INSERT INTO users (first_name, last_name, email, pass) VALUES ($1, $2, $3, $4) RETURNING *'
@@ -113,3 +113,5 @@ export const UserStore = {
     }
   }
 }
+
+module.exports = UserStore

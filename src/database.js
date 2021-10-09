@@ -1,6 +1,7 @@
-import dotenv from 'dotenv'
-import { Pool } from 'pg'
-import { parse } from 'pg-connection-string'
+const dotenv = require('dotenv')
+const Pool = require('pg').Pool
+const parse = require('pg-connection-string').parse
+require('regenerator-runtime/runtime')
 
 // parse('postgres://someuser:somepassword@somehost:381/somedatabase')
 // "postgres://full_stack_user:Pass1234@storefront-db-test-instance-1.cekeonejxbqq.us-east-2.rds.amazonaws.com:5432/postgres"
@@ -44,4 +45,4 @@ if(ENV === 'test_aws') {
   client = new Pool(config)
 }
 
-export default client
+module.exports = client
