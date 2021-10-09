@@ -12,12 +12,14 @@ const create = async (req, res) => {
   }
 
   try {
+    console.log('store', store)
     const newUser = await store.create(user)
     res.status(201)
     res.json(newUser)
   } catch (error) {
     res.status(400)
     res.json(error)
+    console.log(error)
   }
 }
 

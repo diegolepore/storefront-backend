@@ -114,4 +114,4 @@ const UserStore = {
   }
 }
 
-module.exports = UserStore
+module.exports = { UserStore }
