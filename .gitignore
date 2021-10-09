@@ -9,7 +9,7 @@ node_modules/
 /pgdata
 .husky/
 
-# build/
+build/
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
