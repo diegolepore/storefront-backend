@@ -1,5 +1,5 @@
 // import express from 'express'
-const DashboardQueries =  require('../services/dashboard')
+const DashboardQueries =  require('../services/dashboard').DashboardQueries
 const verifyJWT =  require('../middleware/auth.middleware').verifyJWT
 
 const currentOrderByUser = async (req, res) => {
