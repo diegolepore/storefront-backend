@@ -1,25 +1,16 @@
 .DS_Store
-node_modules
-/build
+node_modules/
+.gitignore
+.elasticbeanstalk/
 
 # local env files
 .env
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw*
-designs/
-
 .vercel
-
 /pgdata
+.husky/
+
+build/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

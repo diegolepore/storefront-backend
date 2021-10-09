@@ -1,9 +1,9 @@
-import express, { Request, Response } from 'express'
-import { Product, ProductStore as store } from '../models/product'
-import { verifyJWT } from '../middleware/auth.middleware'
+// import express, { Request, Response } from 'express'
+const store = require('../models/product').ProductStore
+const verifyJWT = require('../middleware/auth.middleware').verifyJWT
 
-const create = async (req: Request, res: Response) => {
-  const products: Product = {
+const create = async (req, res) => {
+  const products = {
     name: req.body.name,
     description: req.body.description,
     image_url: req.body.image_url,
@@ -20,7 +20,7 @@ const create = async (req: Request, res: Response) => {
     res.json(error)
   }
 }
-const index = async (req: Request, res: Response) => {
+const index = async (req, res) => {
   try {
     const products = await store.index()
     res.json(products)
@@ -30,9 +30,9 @@ const index = async (req: Request, res: Response) => {
   }
 }
 
-const show = async (req: Request, res: Response) => {
+const show = async (req, res) => {
   try {
-    const id: string = req.params.id
+    const id = req.params.id
     const product = await store.show(id)
     res.json(product)
   } catch (error) {
@@ -41,9 +41,9 @@ const show = async (req: Request, res: Response) => {
   }
 }
 
-const remove = async (req: Request, res: Response) => {
+const remove = async (req, res) => {
   try {
-    const id: string = req.params.id
+    const id = req.params.id
     const product = await store.delete(id)
     res.json(product)
   } catch (error) {
@@ -52,11 +52,11 @@ const remove = async (req: Request, res: Response) => {
   }
 }
 
-const productRoutes = (app: express.Application): void => {
+const productRoutes = (app) => {
   app.post('/products', verifyJWT, create)
   app.get('/products', index)
   app.get('/products/:id', show)
   app.delete('/products/:id', verifyJWT, remove)
 }
 
-export default productRoutes
+module.exports = productRoutes

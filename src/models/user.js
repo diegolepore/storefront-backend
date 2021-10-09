@@ -1,13 +1,13 @@
-import client from '../database'
-import bcrypt from 'bcrypt'
+const client = require('../database')
+const bcrypt = require('bcrypt')
 
-export type User = {
-  id?: number,
-  first_name?: string; 
-  last_name?: string; 
-  email?: string; 
-  pass?: string;
-}
+// export type User = {
+//   id?: number,
+//   first_name?; 
+//   last_name?; 
+//   email?; 
+//   pass?;
+// }
 
 const {
   BCRYPT_PASSWORD,
@@ -15,9 +15,9 @@ const {
 } = process.env
 
 const pepper = BCRYPT_PASSWORD
-const saltRounds = (SALT_ROUNDS as unknown) as string
+const saltRounds = (SALT_ROUNDS)
 
-const excludeObjectProps = (objToFilter: { [x: string]: unknown }, prop: string) => {
+const excludeObjectProps = (objToFilter, prop) => {
   return Object.keys(objToFilter).filter((key) => {
     return key !== prop
   }).reduce((obj, current) => {
@@ -28,13 +28,13 @@ const excludeObjectProps = (objToFilter: { [x: string]: unknown }, prop: string)
   }, {})
 }
 
-export const UserStore = {
-  async create(u: User): Promise<User | undefined> {
+const UserStore = {
+  async create(u) {
     try {
       const sql = 'INSERT INTO users (first_name, last_name, email, pass) VALUES ($1, $2, $3, $4) RETURNING *'
       const conn = await client.connect()
       const hash = bcrypt.hashSync(
-        (u.pass as string) + pepper,
+        (u.pass) + pepper,
         parseInt(saltRounds)
       )
       const result = await conn.query(sql, [u.first_name, u.last_name, u.email, hash])
@@ -48,7 +48,7 @@ export const UserStore = {
     }
   },
 
-  async index(): Promise<User[] | undefined> {
+  async index() {
     try {
       const sql = 'SELECT * FROM users'
       const conn = await client.connect()
@@ -62,7 +62,7 @@ export const UserStore = {
     }
   },
 
-  async show(id: string): Promise<User | undefined> {
+  async show(id) {
     try {
       const conn = await client.connect()
       const sql = 'SELECT * FROM users WHERE id=($1)'
@@ -76,7 +76,7 @@ export const UserStore = {
     }
   },
 
-  async delete(id: string): Promise<User | undefined> {
+  async delete(id) {
     try {
       const conn = await client.connect()
       const sql = 'DELETE FROM users WHERE id=($1) RETURNING *'
@@ -90,7 +90,7 @@ export const UserStore = {
     }
   },
 
-  async authenticate(email: string, pass:string): Promise<User | undefined> {
+  async authenticate(email, pass) {
     try {
       
       const conn = await client.connect()
@@ -113,3 +113,5 @@ export const UserStore = {
     }
   }
 }
+
+module.exports = UserStore

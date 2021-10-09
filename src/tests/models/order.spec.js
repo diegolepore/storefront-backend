@@ -1,11 +1,11 @@
-import { Order, OrderStore as store } from '../../models/order'
+import { OrderStore as store } from '../../models/order'
 import supertest from 'supertest'
-import app from '../../server'
+import app from '../../../server'
 
 let access_token = ''
 let userId = 0
 let productId = 0
-let order: Order = {
+let order = {
   id: 0,
   order_status: '',
   user_id: 0
@@ -89,7 +89,7 @@ describe('⭐️ Order Model suite', () => {
     const o = {
       order_status: 'active'
     }
-    const result: Order | undefined = await store.create({
+    const result = await store.create({
       order_status: o.order_status
     }, String(userId))
 
@@ -106,14 +106,14 @@ describe('⭐️ Order Model suite', () => {
   })
 
   it('index method should return a list of orders', async () => {
-    const result: Order[] | undefined = await store.index(String(userId))
+    const result = await store.index(String(userId))
     if(result) {
       expect(result.length).toBeGreaterThan(0)
     }
   })
 
   it('show method should return the correct order', async () => {
-    const result: Order | undefined = await store.show(String(order.id), String(userId))
+    const result = await store.show(String(order.id), String(userId))
 
     if(result) {
       expect(result.order_status).toBe(order.order_status)
@@ -123,7 +123,7 @@ describe('⭐️ Order Model suite', () => {
 
   it('edits an order status', async () => {
     const newOrderStatus = 'complete'
-    const result: Order | undefined = await store.editStatus(String(order.id), String(userId), newOrderStatus)
+    const result = await store.editStatus(String(order.id), String(userId), newOrderStatus)
 
     if(result) {
       expect(result.order_status).toBe(newOrderStatus)

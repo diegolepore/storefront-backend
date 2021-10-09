@@ -1,10 +1,10 @@
 {
   "spec_dir": "./src/tests",
   "spec_files": [
-    "**/*.spec.ts"
+    "**/*.spec.js"
   ],
   "helpers": [
-    "helpers/**/*.ts"
+    "../node_modules/@babel/register/lib/node.js"
   ],
   "reporters": [
     {

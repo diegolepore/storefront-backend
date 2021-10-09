@@ -7,7 +7,7 @@ const product = {
 	price: 80,
 	category: 'sports'
 }
-let productId: number | undefined = 0
+let productId = 0
 
 describe('📦 Product Model suite', () => {
 
@@ -24,7 +24,7 @@ describe('📦 Product Model suite', () => {
   })
 
   it('create method should add a product', async () => {
-    const result: Product | undefined = await store.create({
+    const result = await store.create({
       name: product.name,
       description: product.description,
       image_url: product.image_url,
@@ -43,7 +43,7 @@ describe('📦 Product Model suite', () => {
   })
 
   it('index method should return a list of products', async () => {
-    const result: Product[] | undefined = await store.index()
+    const result = await store.index()
     
     if(result) {
       expect(result.length).toBeGreaterThan(0)
@@ -51,7 +51,7 @@ describe('📦 Product Model suite', () => {
   })
 
   it('show method should return the correct product', async () => {
-    const result: Product | undefined= await store.show(String(productId))
+    const result = await store.show(String(productId))
 
     if(result) {      
       expect(result.id).toBe(productId)
@@ -65,7 +65,7 @@ describe('📦 Product Model suite', () => {
 
   it('delete method should remove the product', async () => {
     const deletedProduct = await store.delete(String(productId))
-    const result: Product | undefined= await store.show(String(productId))
+    const result = await store.show(String(productId))
 
     expect(deletedProduct?.name).toBe(product.name)
     expect(result).toBeFalsy()

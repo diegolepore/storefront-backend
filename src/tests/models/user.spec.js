@@ -1,6 +1,6 @@
 import { User, UserStore as store } from '../../models/user'
 
-let userId: number | undefined = 0
+let userId = 0
 const user = {
   first_name: 'Fat',
   last_name: 'Mike',
@@ -31,7 +31,7 @@ describe('👤 User Model suite', () => {
   })
 
   it('create method should add a user', async () => {
-    const result: User | undefined = await store.create({
+    const result = await store.create({
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
@@ -48,7 +48,7 @@ describe('👤 User Model suite', () => {
   })
 
   it('index method should return a list of users', async () => {
-    const result: User[] | undefined = await store.index()
+    const result = await store.index()
     
     if(result) {
       expect(result.length).toBeGreaterThan(0)
@@ -56,7 +56,7 @@ describe('👤 User Model suite', () => {
   })
 
   it('show method should return the correct user', async () => {
-    const result: User | undefined = await store.show(String(userId))
+    const result = await store.show(String(userId))
 
     if(result) {
       expect(result.first_name).toBe(user.first_name)
@@ -66,7 +66,7 @@ describe('👤 User Model suite', () => {
   })
 
   it('delete method should remove the user', async () => {
-    const deletedUser: User | undefined = await store.delete(String(userId))
+    const deletedUser = await store.delete(String(userId))
     
     if(deletedUser) {
       expect(deletedUser.email).toBe(user.email)

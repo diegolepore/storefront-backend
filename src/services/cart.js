@@ -1,9 +1,9 @@
-import client from '../database'
-import { OrderStore } from '../models/order'
-import { OrderProductStore } from '../models/order_product'
+const client =  require('../database')
+const OrderStore = require('../models/order').OrderStore
+const OrderProductStore = require('../models/order_product').OrderProductStore
 
-export const CartQueries = {
-  async addProductToCart(userId: string, productId: string, quantity: number ): Promise<unknown> {
+const CartQueries = {
+  async addProductToCart(userId, productId, quantity ) {
     try {
       const ordersql = 'SELECT * FROM orders WHERE user_id=($1) AND order_status=\'active\''
       const conn = await client.connect()
@@ -36,7 +36,7 @@ export const CartQueries = {
         }
       } else {
         const order = await OrderStore.create({ order_status: 'active'}, userId)
-        const orderId = order?.id as unknown as string
+        const orderId = order?.id
         return await OrderProductStore.create(quantity, orderId, productId)
       }
       
@@ -45,7 +45,7 @@ export const CartQueries = {
     }
   },
 
-  async deleteProductFromCart(order_id: string, product_id: string): Promise<unknown> {
+  async deleteProductFromCart(order_id, product_id) {
     try {
       const sql = 'DELETE FROM order_products WHERE order_id=($1) AND product_id=($2) RETURNING *'
       const conn = await client.connect()
@@ -60,3 +60,5 @@ export const CartQueries = {
     }
   }
 }
+
+module.exports = { CartQueries }
