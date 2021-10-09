@@ -2,7 +2,7 @@
   "name": "storefront-backend-project",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
@@ -10,7 +10,7 @@
     "test:dev": "db-migrate --env test_dev up && ENV=test_dev jasmine-ts && db-migrate --env test_dev down -c 5",
     "build": "rm -rf build && tsc",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build/src --onSuccess 'node ./build/src/server.js'",
-    "start:production": "ENV=production node build/src/server.js",
+    "start": "ENV=production node build/src/server.js",
     "start:staging": "ENV=staging node build/src/server.js",
     "start:dev": "node build/src/server.js",
     "migrate:production": "db-migrate --env production up",
