@@ -1,13 +1,11 @@
 # Storefront backend
 
 ### 📦 Dependencies used 
-Along with the corresponding type definitions, even though these are not included in the list below.
 
 | Name | Link |
 | ------ | ------ |
 | Node | https://nodejs.org/ |
 | Express | https://expressjs.com/ |
-| TypeScript | https://www.typescriptlang.org/ |
 | bcrypt  | https://github.com/kelektiv/node.bcrypt.js |
 | db-migrate | https://db-migrate.readthedocs.io/en/latest/ |
 | db-migrate-pg | https://github.com/db-migrate/pg |
@@ -17,12 +15,9 @@ Along with the corresponding type definitions, even though these are not include
 | Husky | https://typicode.github.io/husky/#/ |
 | jasmine | https://jasmine.github.io/ |
 | jasmine-spec-reporter | https://github.com/bcaudan/jasmine-spec-reporter |
-| jasmine-ts | https://github.com/svi3c/jasmine-ts#readme |
 | jsonwebtoken | https://github.com/auth0/node-jsonwebtoken#readme |
 | pg | https://www.npmjs.com/package/pg |
 | supertest | https://www.npmjs.com/package/supertest |
-| tsc-watch | https://www.npmjs.com/package/tsc-watch |
-| ts-node | https://www.npmjs.com/package/ts-node |
 
 
 ### .env file I am using for the project
