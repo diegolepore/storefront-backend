@@ -1,8 +1,9 @@
-import { DashboardQueries } from '../../services/dashboard'
-import { User } from '../../models/user'
-import supertest from 'supertest'
-import app from '../../../server'
-import jwt from 'jsonwebtoken'
+/* eslint-disable no-undef */
+const DashboardQueries = require('../../services/dashboard').DashboardQueries
+// import { User } from '../../models/user'
+const supertest =  require('supertest')
+const app = require('../../../server')
+const jwt = require('jsonwebtoken')
 
 let access_token = ''
 let userFromJWT = {}

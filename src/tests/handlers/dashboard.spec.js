@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 // import { Order } from '../../models/order'
-import supertest from 'supertest'
-import app from '../../../server'
+const supertest =  require('supertest')
+const app = require('../../../server')
 
 let access_token = ''
 let userId = 0

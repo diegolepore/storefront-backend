@@ -12,6 +12,7 @@ const create = async (req, res) => {
   }
 
   try {
+    // eslint-disable-next-line no-console
     console.log('store', store)
     const newUser = await store.create(user)
     res.status(201)
@@ -19,6 +20,7 @@ const create = async (req, res) => {
   } catch (error) {
     res.status(400)
     res.json(error)
+    // eslint-disable-next-line no-console
     console.log(error)
   }
 }

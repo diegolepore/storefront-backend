@@ -1,5 +1,6 @@
-import supertest from 'supertest'
-import app from '../../../server'
+/* eslint-disable no-undef */
+const supertest =  require('supertest')
+const app = require('../../../server')
 
 let access_token = ''
 let userId = 0
@@ -35,7 +36,6 @@ describe('📦 /products route suite', () => {
       })
       .expect('Content-Type', /json/)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     userId = u.body.id
     access_token = response.body.access_token
   })
@@ -54,7 +54,6 @@ describe('📦 /products route suite', () => {
       .send(product)
       .expect('Content-Type', /json/)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     productId = response.body.id
 
     expect(response.body.name).toBe(product.name)

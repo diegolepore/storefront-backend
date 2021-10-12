@@ -14,7 +14,6 @@ const {
   DATABASE_DEV_URL,
   DATABASE_TEST_DEV_URL,
   DATABASE_PROD_URL,
-  DATABASE_STAGING_URL,
   DATABASE_TEST_AWS
 } = process.env
 
@@ -32,11 +31,6 @@ if(ENV === 'test_dev') {
 
 if(ENV === 'production') {
   const config = parse(DATABASE_PROD_URL)
-  client = new Pool(config)
-}
-
-if(ENV === 'staging') {
-  const config = parse(DATABASE_STAGING_URL)
   client = new Pool(config)
 }
   

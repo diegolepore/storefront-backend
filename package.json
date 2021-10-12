@@ -14,10 +14,8 @@
     "test:aws": "db-migrate --env test_aws up && ENV=test_aws jasmine && db-migrate --env test_aws down -c 5",
     "test:dev": "db-migrate --env test_dev up && ENV=test_dev jasmine && db-migrate --env test_dev down -c 5",
     "migrate:production": "db-migrate --env production up",
-    "migrate:staging": "db-migrate --env staging up",
+    "migrate:test-aws": "db-migrate --env test_aws up",
     "migrate:dev": "db-migrate --env dev up",
-    "createdb:prod": "db-migrate --config database_create.json db:create storefront_db --env prod && db-migrate --config database_create.json db:create storefront_test_db --env test_aws",
-    "createdb:dev": "db-migrate --config database_create.json db:create storefront_db --env dev && db-migrate --config database_create.json db:create storefront_test_db --env test_dev",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -26,6 +24,7 @@
   "devDependencies": {
     "eslint": "^7.30.0",
     "husky": "^7.0.1",
+    "jasmine": "^3.9.0",
     "nodemon": "^2.0.13"
   },
   "dependencies": {
@@ -35,7 +34,6 @@
     "db-migrate-pg": "^1.2.2",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "jasmine": "^3.8.0",
     "jasmine-spec-reporter": "^7.0.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",

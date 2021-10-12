@@ -1,6 +1,8 @@
-import { OrderStore as store } from '../../models/order'
-import supertest from 'supertest'
-import app from '../../../server'
+/* eslint-disable no-undef */
+// import { OrderStore as store } from '../../models/order'
+const store = require('../../models/order').OrderStore
+const supertest =  require('supertest')
+const app = require('../../../server')
 
 let access_token = ''
 let userId = 0

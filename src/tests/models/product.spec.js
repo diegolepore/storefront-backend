@@ -1,4 +1,6 @@
-import { Product, ProductStore as store } from '../../models/product'
+/* eslint-disable no-undef */
+// import { Product, ProductStore as store } from '../../models/product'
+const store = require('../../models/product').ProductStore
 
 const product = {
 	name: 'Skateboard',

@@ -1,17 +1,17 @@
 {
   "production": {
     "driver": "pg",
-    "host": "storefront-production-db-instance-1.ctnebqnvkqjx.eu-west-3.rds.amazonaws.com",
-    "database": "storefront_production_db",
-    "user": "full_stack_user",
-    "password": "Pass1234"
+    "host": {"ENV": "POSTGRES_PROD_HOST"},
+    "database": {"ENV": "POSTGRES_PROD_DB"},
+    "user": {"ENV": "POSTGRES_PROD_USER"},
+    "password":{"ENV": "POSTGRES_PROD_PASSWORD"}
   },
-  "staging": {
+  "test_aws": {
     "driver": "pg",
-    "host": "127.0.0.1",
-    "database": "storefront_test_db",
-    "user": "full_stack_user",
-    "password": "Pass1234"
+    "host": {"ENV": "POSTGRES_AWS_TEST_DB_HOST"},
+    "database": {"ENV": "POSTGRES_AWS_TEST_DB"},
+    "user": {"ENV": "POSTGRES_AWS_TEST_USER"},
+    "password":{"ENV": "POSTGRES_AWS_TEST_PASSWORD"}
   },
   "dev": {
     "driver": "pg",
@@ -26,12 +26,5 @@
     "database": "storefront_test_db",
     "user": "full_stack_user",
     "password": "Pass1234"
-  },
-  "test_aws": {
-    "driver": "pg",
-    "host": "db",
-    "database": "storefront_test_db",
-    "user": "full_stack_user",
-    "password": "123456"
   }
 }

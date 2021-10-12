@@ -1,6 +1,7 @@
-import supertest from 'supertest'
-import app from '../../../server'
-import jwt from 'jsonwebtoken'
+/* eslint-disable no-undef */
+const supertest =  require('supertest')
+const app = require('../../../server')
+const jwt = require('jsonwebtoken')
 
 const request = supertest(app)
 const user = {
@@ -21,7 +22,6 @@ describe('👤 /users route suite', () => {
       .send(user)
       .expect('Content-Type', /json/)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     userId = response.body.id
 
     expect(response.body.first_name).toBe(user.first_name)

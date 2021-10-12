@@ -1,4 +1,7 @@
-import { DisplayProcessor, SpecReporter, StacktraceOption } from 'jasmine-spec-reporter'
+/* eslint-disable no-undef */
+const DisplayProcessor = require('jasmine-spec-reporter').DisplayProcessor
+const SpecReporter = require('jasmine-spec-reporter').SpecReporter
+const StacktraceOption = require('jasmine-spec-reporter').StacktraceOption
 
 class CustomProcessor extends DisplayProcessor {
   displayJasmineStarted(info, log) {
